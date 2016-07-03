@@ -44,11 +44,23 @@
                     </div>
                 </div>
                 <ul class="list-group">
-                    <li data-ng-repeat="b in selectedBookmarks" class="list-group-item">
+                    <li class="list-group-item">
                         <img src="chrome://favicon/{{b.url}}"/>&nbsp;
                         <a title="{{b.title}}"
                            href="{{b.url}}"
-                           target="_blank" style="font-family: Tahoma,Helvetica,Arial;color:{{b.color}}">{{b.title}}</a>
+                           target="_blank">My favourite bookmark</a>
+                    </li>
+                    <li class="list-group-item">
+                        <img src="chrome://favicon/{{b.url}}"/>&nbsp;
+                        <a title="{{b.title}}"
+                           href="{{b.url}}"
+                           target="_blank">My favourite bookmark</a>
+                    </li>
+                    <li class="list-group-item">
+                        <img src="chrome://favicon/{{b.url}}"/>&nbsp;
+                        <a title="{{b.title}}"
+                           href="{{b.url}}"
+                           target="_blank">My favourite bookmark</a>
                     </li>
                 </ul>
             </div>
