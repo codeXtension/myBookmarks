@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
 
 @Component({
     selector: 'click-me',
-    template: `<button (click)="onClickMe()">Click me!</button>{{clickMessage}}`
+    template: `<button class="ui-button ui-corner-all ui-widget" (click)="onClickMe()">Click me!</button>{{clickMessage}}`
 })
 
 export class ClickMeComponent{
