@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bookmark</title>
     <!-- 1. Load libraries -->
@@ -17,11 +16,46 @@
     <!-- 2. Configure SystemJS -->
 
     <link rel="stylesheet" href="../styles/bootstrap.min.css">
+    <link rel="stylesheet" href="../styles/main.css">
 </head>
 <body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 col-md-8">
+            <my-app>Loading...</my-app>
+            <click-me></click-me>
+        </div>
+        <div class="col-xs-6 col-md-4">
+            <p></p>
+            <div class="panel panel-primary">
+                <div class="panel-heading"><span class="fa fa-link" aria-hidden="true"></span> <a style="color: white"
+                                                                                                  href="#"
+                                                                                                  target="_blank">Bookmarks</a>
+                    <span class="fa fa-cog pull-right" style="cursor:pointer;"></span>
+                    <span class="fa fa-refresh pull-right" style="cursor:pointer;"></span>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group-sm">
 
-<my-app>Loading...</my-app>
-<click-me></click-me>
+                    </div>
+                    <div>
+                        <input type="search" id="searchText" class="form-control"
+                               placeholder="Search ...">
+                    </div>
+                </div>
+                <ul class="list-group">
+                    <li data-ng-repeat="b in selectedBookmarks" class="list-group-item">
+                        <img src="chrome://favicon/{{b.url}}"/>&nbsp;
+                        <a title="{{b.title}}"
+                           href="{{b.url}}"
+                           target="_blank" style="font-family: Tahoma,Helvetica,Arial;color:{{b.color}}">{{b.title}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 </body>
 </html>
