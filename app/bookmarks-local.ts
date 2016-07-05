@@ -7,13 +7,13 @@ import { Bookmark,BookmarkType } from './bookmark';
 @Component({
     selector: 'bookmarks',
     template: `
-        <p>number of bookmaks: {{values}}</p>
+        <p>number of bookmaks: {{values.length}}</p>
     `
 })
 
 /// <reference path="./lib/chrome.d.ts"/>
 export class BookmarksLocal {
-    values:Array<Bookmark>;
+    public values:Array<Bookmark>;
 
     constructor() {
         this.values = [];
@@ -22,7 +22,7 @@ export class BookmarksLocal {
                 if (bookmarkTreeNodes[0].children && bookmarkTreeNodes[0].children[0].children) {
                     for (let i = 0; i < bookmarkTreeNodes[0].children[0].children.length; i++) {
                         let level0 = bookmarkTreeNodes[0].children[0].children[i];
-                        BookmarksLocal.prototype.scanLocalBookmarks(level0, []);
+                        this.scanLocalBookmarks(level0, []);
                     }
                 }
             }
@@ -38,7 +38,7 @@ export class BookmarksLocal {
             let tempTag = parentTags.slice();
             tempTag.push(bookmarkNode.title);
             for (var n = 0; n < bookmarkNode.children.length; n++) {
-                BookmarksLocal.prototype.scanLocalBookmarks(bookmarkNode.children[n], tempTag);
+                this.scanLocalBookmarks(bookmarkNode.children[n], tempTag);
             }
         }
     }
