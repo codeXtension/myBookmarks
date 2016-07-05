@@ -6,5 +6,5 @@ System.config({
         }
     }
 });
-System.import('../scripts/boot.js')
+System.import('../scripts/boot')
     .then(null, console.error.bind(console));
