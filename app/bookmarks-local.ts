@@ -16,7 +16,7 @@ export class BookmarksLocal {
     public values:Array<Bookmark>;
 
     constructor() {
-        this.values = [];
+        this.values = new Array<Bookmark>();
         chrome.bookmarks.getTree(
             function (bookmarkTreeNodes) {
                 if (bookmarkTreeNodes[0].children && bookmarkTreeNodes[0].children[0].children) {
