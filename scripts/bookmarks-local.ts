@@ -1,7 +1,8 @@
 /**
  * Created by elie on 04.07.2016.
  */
-import { Component } from '@angular/core';
+
+import { Component, OnInit } from '../node_modules/angular2/core.d';
 import { Bookmark,BookmarkType } from './bookmark';
 
 @Component({
@@ -15,16 +16,23 @@ import { Bookmark,BookmarkType } from './bookmark';
     </ul>
     `
 })
-
+/// <reference path="../node_modules/typescript/lib/lib.es6.d.ts" />
+/// <reference path="../node_modules/angular2/typings/browser.d.ts" />
 /// <reference path="./lib/chrome.d.ts"/>
-export class BookmarksLocal {
+export class BookmarksLocal implements OnInit {
     public values:Array<Bookmark>;
 
     constructor() {
-        this.values = this.retrieveBookmarks();
+
     }
 
-    private retrieveBookmarks():Array<Bookmark> {
+    ngOnInit() {
+        this.values = new Array<Bookmark>();
+        this.values.push(new Bookmark('asd', 'asd', [], BookmarkType.OWN_CLOUD, ''));
+        this.retrieveBookmarks().then(bookmarks => this.values = bookmarks);
+    }
+
+    private retrieveBookmarks():any {
         let result = new Array<Bookmark>();
         chrome.bookmarks.getTree(
             function (bookmarkTreeNodes) {
@@ -34,10 +42,9 @@ export class BookmarksLocal {
                         BookmarksLocal.prototype.scanLocalBookmarks(level0, [], result);
                     }
                 }
+                return Promise.resolve(result);
             }
         );
-
-        return result;
     }
 
     private scanLocalBookmarks(bookmarkNode:any, parentTags:any, result:Array<Bookmark>):void {

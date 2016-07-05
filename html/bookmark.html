@@ -7,12 +7,11 @@
     <!-- 1. Load libraries -->
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="../node_modules/core-js/client/shim.min.js"></script>
-    <script src="../node_modules/zone.js/dist/zone.js"></script>
-    <script src="../node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="../node_modules/angular2/bundles/angular2-polyfills.js"></script>
     <script src="../node_modules/systemjs/dist/system.src.js"></script>
-    <script src="../scripts/systemjs.config.js"></script>
-    <script src="../scripts/bookmark.js"></script>
+    <script src="../node_modules/rxjs/bundles/Rx.js"></script>
+    <script src="../node_modules/angular2/bundles/angular2.dev.js"></script>
+    <script src="../system.config.js"></script>
     <!-- 2. Configure SystemJS -->
 
     <link rel="stylesheet" href="../styles/bootstrap.min.css">
@@ -22,7 +21,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-xs-12 col-md-8">
-            <click-me></click-me>
+
         </div>
         <div class="col-xs-6 col-md-4">
             <p></p>
@@ -42,7 +41,7 @@
                                placeholder="Search ...">
                     </div>
                 </div>
-                <bookmarks>loading...</bookmarks>
+                <bookmark></bookmark>
             </div>
         </div>
     </div>
