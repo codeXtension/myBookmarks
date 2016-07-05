@@ -29,7 +29,7 @@ export class BookmarksLocal {
         );
     }
 
-    scanLocalBookmarks(bookmarkNode, parentTags) {
+    scanLocalBookmarks(bookmarkNode:any, parentTags:any) {
         if (bookmarkNode.url != undefined) {
             let bookmark = new Bookmark(bookmarkNode.url, bookmarkNode.title, parentTags, BookmarkType.LOCAL, '#91205a');
 
