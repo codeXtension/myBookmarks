@@ -4,17 +4,17 @@
   "name": "myBookmarks",
   "description": "Bookmark extension",
   "version": "2.0",
-  "options_page": "html/settings.html",
+  "options_page": "settings.html",
   "homepage_url": "http://www.codextension.io",
   "icons": {
     "128": "images/logo.png"
   },
   "background": {
-    "page": "html/background.html",
+    "page": "background.html",
     "persistent": false
   },
   "chrome_url_overrides": {
-    "newtab": "html/bookmark.html"
+    "newtab": "bookmark.html"
   },
   "permissions": [
     "contextMenus",
@@ -28,7 +28,7 @@
   ],
   "page_action": {
     "default_icon": "images/bookmark_bw.png",
-    "default_popup": "html/manage.html",
+    "default_popup": "manage.html",
     "default_title": "Manage ownBookmarks"
   }
 }

@@ -2,22 +2,21 @@
  * Created by elie on 04.07.2016.
  */
 
-import { Component, OnInit } from '../node_modules/angular2/core.d';
+import { Component, OnInit } from 'angular2/core';
 import { Bookmark,BookmarkType } from './bookmark';
 
 @Component({
     selector: 'bookmarks',
     template: `
     <ul class="list-group">
-        <li *ngFor="let b of values" class="list-group-item">
+        <li *ngFor="#b of values" class="list-group-item">
                         <img src=""/>&nbsp;
                         <a title="{{b.title}}" href="{{b.url}}" target="_blank">{{b.title}}</a>
         </li>
     </ul>
     `
 })
-/// <reference path="../node_modules/typescript/lib/lib.es6.d.ts" />
-/// <reference path="../node_modules/angular2/typings/browser.d.ts" />
+
 /// <reference path="./lib/chrome.d.ts"/>
 export class BookmarksLocal implements OnInit {
     public values:Array<Bookmark>;
@@ -28,7 +27,6 @@ export class BookmarksLocal implements OnInit {
 
     ngOnInit() {
         this.values = new Array<Bookmark>();
-        this.values.push(new Bookmark('asd', 'asd', [], BookmarkType.OWN_CLOUD, ''));
         this.retrieveBookmarks().then(bookmarks => this.values = bookmarks);
     }
 
@@ -42,9 +40,9 @@ export class BookmarksLocal implements OnInit {
                         BookmarksLocal.prototype.scanLocalBookmarks(level0, [], result);
                     }
                 }
-                return Promise.resolve(result);
             }
         );
+        return Promise.resolve(result);
     }
 
     private scanLocalBookmarks(bookmarkNode:any, parentTags:any, result:Array<Bookmark>):void {
