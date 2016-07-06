@@ -15,3 +15,8 @@ export enum BookmarkType {
     OWN_CLOUD,
     GOOGLE_DRIVE
 }
+
+export interface BookmarksResolver {
+    findAll():Array<Bookmark>;
+    find(criteria:string):Bookmark;
+}

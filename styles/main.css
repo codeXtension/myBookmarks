@@ -27,13 +27,13 @@ li {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #c4e3f3;
+    background: lightgrey;
     -webkit-border-radius: 0px;
 }
 
 ::-webkit-scrollbar-thumb:hover,
 ::-webkit-scrollbar-thumb:active {
-    background: #a6c1d0;
+    background: #2196f3;
 }
 
 .bookmarkList li {
@@ -42,5 +42,11 @@ li {
 }
 
 .separator {
-    border-top: solid 1px lightblue;
+    border-top: solid 1px lightgrey;
+}
+
+.square-border:first-child {
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+    border-top: none;
 }
