@@ -8,9 +8,9 @@ import { Bookmark,BookmarkType } from './bookmark';
 @Component({
     selector: 'bookmarks',
     template: `
-    <ul class="list-group">
+    <ul class="list-group bookmark-scrollable bookmarkList">
         <li *ngFor="#b of values" class="list-group-item">
-                        <img src=""/>&nbsp;
+                        <img src="chrome://favicon/{{b.url}}"/>&nbsp;
                         <a title="{{b.title}}" href="{{b.url}}" target="_blank">{{b.title}}</a>
         </li>
     </ul>

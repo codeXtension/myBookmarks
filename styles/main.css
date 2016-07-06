@@ -1,0 +1,42 @@
+.bookmark-scrollable {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.bookmarkList li {
+    display: block;
+    list-style-image: none;
+}
+
+li {
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+::-webkit-scrollbar {
+    width: 7px;
+    height: 5px;
+    background-color: rgba(255, 255, 255, 0);
+    -webkit-border-radius: 0px;
+}
+
+::-webkit-scrollbar:hover {
+    width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c4e3f3;
+    -webkit-border-radius: 0px;
+}
+
+::-webkit-scrollbar-thumb:hover,
+::-webkit-scrollbar-thumb:active {
+    background: #a6c1d0;
+}
+
+.bookmarkList li {
+    display: block;
+    list-style-image: none;
+}
