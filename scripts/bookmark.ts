@@ -18,5 +18,5 @@ export enum BookmarkType {
 
 export interface BookmarksResolver {
     findAll():Array<Bookmark>;
-    find(criteria:string):Bookmark;
+    find(criteria:string):Array<Bookmark>;
 }

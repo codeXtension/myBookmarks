@@ -23,8 +23,19 @@ export class LocalBookmarkResolver implements BookmarksResolver {
         return Promise.resolve(result);
     }
 
-    public find(criteria:string):Bookmark {
-        return null;
+    public find(criteria:string):any {
+        let result = new Array<Bookmark>();
+        chrome.bookmarks.search(criteria,
+            function (bookmarkTreeNodes) {
+                if (bookmarkTreeNodes[0].children && bookmarkTreeNodes[0].children[0].children) {
+                    for (let i = 0; i < bookmarkTreeNodes[0].children[0].children.length; i++) {
+                        let level0 = bookmarkTreeNodes[0].children[0].children[i];
+                        LocalBookmarkResolver.prototype.scanLocalBookmarks(level0, [], result);
+                    }
+                }
+            }
+        );
+        return Promise.resolve(result);
     }
 
     private scanLocalBookmarks(bookmarkNode:any, parentTags:any, result:Array<Bookmark>):void {

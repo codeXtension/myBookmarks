@@ -8,7 +8,7 @@
     list-style-image: none;
 }
 
-li {
+a.list-group-item {
     max-width: 100%;
     white-space: nowrap;
     overflow: hidden;

@@ -9,13 +9,7 @@ import { LocalBookmarkResolver } from './local-bookmark-resolver';
 @Component({
     selector: 'bookmarks',
     providers: [LocalBookmarkResolver],
-    template: `
-    <div class="list-group bookmark-scrollable bookmarkList">
-      <a *ngFor="#b of values" href="{{b.url}}" title="{{b.title}}" target="_blank" class="list-group-item square-border">
-      <img src="chrome://favicon/{{b.url}}"/>&nbsp;{{b.title}}
-      </a>
-    </div>
-    `
+    templateUrl: '/bookmarksListTemplate.html'
 })
 
 /// <reference path="./lib/chrome.d.ts"/>
