@@ -1,0 +1,16 @@
+<div class="panel-body">
+    <div class="form-group-sm">
+
+    </div>
+    <div>
+        <input type="search" (keyup)="onChange($event)" id="searchText" class="form-control"
+               placeholder="Search ...">
+    </div>
+</div>
+<div class="separator">
+    <div class="list-group bookmark-scrollable bookmarkList">
+        <a *ngFor="#value of values" href="{{value.url}}" target="_blank" class="list-group-item square-border">
+            <img src="chrome://favicon/{{value.url}}"/>&nbsp;{{value.title}}
+        </a>
+    </div>
+</div>

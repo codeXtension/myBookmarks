@@ -9,11 +9,12 @@ import { LocalBookmarkResolver } from './local-bookmark-resolver';
 @Component({
     selector: 'bookmarks',
     providers: [LocalBookmarkResolver],
-    templateUrl: '/bookmarksListTemplate.html'
+    templateUrl: '../templates/bookmarksList.html'
 })
 
 /// <reference path="./lib/chrome.d.ts"/>
-export class BookmarksResolver implements OnInit {
+export class BookmarksView implements OnInit {
+
     public values:Array<Bookmark>;
 
     constructor(private localBookmarkResolver:LocalBookmarkResolver) {
@@ -21,7 +22,17 @@ export class BookmarksResolver implements OnInit {
     }
 
     ngOnInit() {
-        this.values = new Array<Bookmark>();
+        this.values = [];
         this.localBookmarkResolver.findAll().then(bookmarks => this.values = bookmarks);
+    }
+
+    onChange(event: any){
+        let value = event.target.value;
+
+        if(value.trim().length==0){
+            this.localBookmarkResolver.findAll().then(bookmarks => this.values = bookmarks);
+        } else{
+            this.localBookmarkResolver.find(value).then(bookmarks => this.values = bookmarks);
+        }
     }
 }

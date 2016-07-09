@@ -9,33 +9,35 @@ import { BookmarksResolver, Bookmark, BookmarkType } from './bookmark';
 export class LocalBookmarkResolver implements BookmarksResolver {
 
     public findAll():any {
-        let result = new Array<Bookmark>();
-        chrome.bookmarks.getTree(
-            function (bookmarkTreeNodes) {
-                if (bookmarkTreeNodes[0].children && bookmarkTreeNodes[0].children[0].children) {
-                    for (let i = 0; i < bookmarkTreeNodes[0].children[0].children.length; i++) {
-                        let level0 = bookmarkTreeNodes[0].children[0].children[i];
-                        LocalBookmarkResolver.prototype.scanLocalBookmarks(level0, [], result);
+        return new Promise(function(resolve, reject) {
+            let result = [];
+            chrome.bookmarks.getTree(
+                function (bookmarkTreeNodes) {
+                    if (bookmarkTreeNodes[0].children && bookmarkTreeNodes[0].children[0].children) {
+                        for (let i = 0; i < bookmarkTreeNodes[0].children[0].children.length; i++) {
+                            let level0 = bookmarkTreeNodes[0].children[0].children[i];
+                            LocalBookmarkResolver.prototype.scanLocalBookmarks(level0, [], result);
+                        }
                     }
+                    resolve(result);
                 }
-            }
-        );
-        return Promise.resolve(result);
+            );
+        });
     }
 
     public find(criteria:string):any {
-        let result = new Array<Bookmark>();
-        chrome.bookmarks.search(criteria,
-            function (bookmarkTreeNodes) {
-                if (bookmarkTreeNodes[0].children && bookmarkTreeNodes[0].children[0].children) {
-                    for (let i = 0; i < bookmarkTreeNodes[0].children[0].children.length; i++) {
-                        let level0 = bookmarkTreeNodes[0].children[0].children[i];
+        return new Promise(function(resolve, reject) {
+            let result = [];
+            chrome.bookmarks.search(criteria,
+                function (bookmarkTreeNodes) {
+                    for (let i = 0; i < bookmarkTreeNodes.length; i++) {
+                        let level0 = bookmarkTreeNodes[i];
                         LocalBookmarkResolver.prototype.scanLocalBookmarks(level0, [], result);
                     }
+                    resolve(result);
                 }
-            }
-        );
-        return Promise.resolve(result);
+            );
+        });
     }
 
     private scanLocalBookmarks(bookmarkNode:any, parentTags:any, result:Array<Bookmark>):void {
