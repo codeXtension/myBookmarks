@@ -8,7 +8,7 @@ import { BookmarksResolver, Bookmark, BookmarkType } from './bookmark';
 
 export class LocalBookmarkResolver implements BookmarksResolver {
 
-    public findAll():any {
+    public findAll():Promise<Array<Bookmark>> {
         return new Promise(function(resolve, reject) {
             let result = [];
             chrome.bookmarks.getTree(
@@ -25,7 +25,7 @@ export class LocalBookmarkResolver implements BookmarksResolver {
         });
     }
 
-    public find(criteria:string):any {
+    public find(criteria:string):Promise<Array<Bookmark>> {
         return new Promise(function(resolve, reject) {
             let result = [];
             chrome.bookmarks.search(criteria,
