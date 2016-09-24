@@ -88,32 +88,43 @@ function createBookmarkFile() {
     gapi.client.drive.files.create(
         {
             'fields': 'id, name, webContentLink',
-            'name': 'bookmarks.json',
-            'parents': ['appDataFolder'],
-            'mimeType': 'application/json',
-            'uploadType': 'media',
-            'body': '{"id": "1","modifiedByMeTime": "12123","name": "asdasd","md5Checksum": "12asdd"}'
+            resource: {
+                'name': 'bookmarks.json',
+                'parents': ['appDataFolder']
+            }
         }
     ).then(function(file) {
         appendPre("Created file " + file.result.name + " id: " + file.result.id);
         ID = file.result.id;
+        saveAppData(ID, file);
     });
 }
 
 function readBookmarkFile() {
     gapi.client.drive.files.get(
         {
+            'alt': 'media',
             'fileId' : ID,
             'fields': 'appProperties,capabilities,contentHints,createdTime,description,explicitlyTrashed,fileExtension,folderColorRgb,fullFileExtension,headRevisionId,iconLink,id,imageMediaMetadata,isAppAuthorized,kind,lastModifyingUser,md5Checksum,mimeType,modifiedByMeTime,modifiedTime,name,originalFilename,ownedByMe,owners,parents,permissions,properties,quotaBytesUsed,shared,sharedWithMeTime,sharingUser,size,spaces,starred,thumbnailLink,trashed,version,videoMediaMetadata,viewedByMe,viewedByMeTime,viewersCanCopyContent,webContentLink,webViewLink,writersCanShare'
         }
     ).then(function(file) {
-        appendPre("Getting file " + file.name + " id: " + file.id + ", downloaded from: " + file.webContentLink);
+        appendPre("File content: " + file.body);
 
-        $.get( file.webContentLink, function( data ) {
-            alert( "Load was performed." );
-        });
     });
 }
+
+var saveAppData = function (fileId, appData) {
+    return gapi.client.request({
+        path: '/upload/drive/v3/files/' + fileId,
+        method: 'PATCH',
+        params: {
+            uploadType: 'media'
+        },
+        body: JSON.stringify(appData)
+    }).then(function(data){
+        apppendPre(data);
+    });
+};
 
 function deleteBookmarkFile() {
     gapi.client.drive.files.delete(
