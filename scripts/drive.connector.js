@@ -7,6 +7,7 @@ var CLIENT_ID = '1071613291540-f749747scb0ncduk7tol9pro2ccd9eu1.apps.googleuserc
 
 var SCOPES = ['https://www.googleapis.com/auth/drive.appdata'];
 
+var ID = undefined;
 /**
  * Check if current user has authorized this application.
  */
@@ -74,9 +75,11 @@ function listFiles() {
             for (var i = 0; i < files.length; i++) {
                 var file = files[i];
                 appendPre(file.name + ' ( url: ' + file.webContentLink +', id: ' + file.id + ')');
+                ID = file.id;
             }
         } else {
             appendPre('No files found.');
+            createBookmarkFile();
         }
     });
 }
@@ -88,17 +91,19 @@ function createBookmarkFile() {
             'name': 'bookmarks.json',
             'parents': ['appDataFolder'],
             'mimeType': 'application/json',
-            'uploadType': 'multipart',
+            'uploadType': 'media',
             'body': '{"id": "1","modifiedByMeTime": "12123","name": "asdasd","md5Checksum": "12asdd"}'
         }
     ).execute(function(file) {
         appendPre("Created file " + file.name + " id: " + file.id);
+        ID = file.id;
     });
 }
 
 function readBookmarkFile() {
     gapi.client.drive.files.get(
-        {   'fileId' : '1mXqBmmiS55zGa_ZOxG0sNHS5-4PKIEt5WwDp_EKy8iDPCw',
+        {
+            'fileId' : ID,
             'fields': 'appProperties,capabilities,contentHints,createdTime,description,explicitlyTrashed,fileExtension,folderColorRgb,fullFileExtension,headRevisionId,iconLink,id,imageMediaMetadata,isAppAuthorized,kind,lastModifyingUser,md5Checksum,mimeType,modifiedByMeTime,modifiedTime,name,originalFilename,ownedByMe,owners,parents,permissions,properties,quotaBytesUsed,shared,sharedWithMeTime,sharingUser,size,spaces,starred,thumbnailLink,trashed,version,videoMediaMetadata,viewedByMe,viewedByMeTime,viewersCanCopyContent,webContentLink,webViewLink,writersCanShare'
         }
     ).execute(function(file) {
@@ -112,7 +117,7 @@ function readBookmarkFile() {
 
 function deleteBookmarkFile() {
     gapi.client.drive.files.delete(
-        {   "fileId" : "1mXqBmmiS55zGa_ZOxG0sNHS5-4PKIEt5WwDp_EKy8iDPCw"
+        {   "fileId" : ID
         }
     ).execute(function(result) {
         appendPre("File deleted.");
@@ -135,9 +140,10 @@ $(function(){
         handleAuthClick(event);
     });
 
-    $('#createBookmark').click(function(){
-        //deleteBookmarkFile();
-        //createBookmarkFile();
+    $('#readBookmark').click(function(){
         readBookmarkFile();
+    });
+    $('#deleteBookmark').click(function(){
+        deleteBookmarkFile();
     });
 });
