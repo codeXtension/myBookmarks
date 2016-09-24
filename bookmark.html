@@ -12,6 +12,8 @@
     <script src="node_modules/rxjs/bundles/Rx.js"></script>
     <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
     <script src="scripts/system.config.js"></script>
+    <script src="scripts/drive.connector.js"></script>
+    <script src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
     <!-- 2. Configure SystemJS -->
 
     <link rel="stylesheet" href="styles/bootstrap.min.css">
@@ -22,7 +24,17 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-xs-12 col-md-8">
-
+            <button id="createBookmark">
+                bookmark file
+            </button>
+            <div id="authorize-div" style="display: none">
+                <span>Authorize access to Drive API</span>
+                <!--Button for the user to click to initiate auth sequence -->
+                <button id="authorizeMyBookmark">
+                    Authorize
+                </button>
+            </div>
+            <pre id="output"></pre>
         </div>
         <div class="col-xs-12 col-md-4">
             <p></p>

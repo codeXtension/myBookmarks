@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "content_security_policy": "script-src 'self' https://apis.google.com 'unsafe-eval'; object-src 'self'",
   "name": "myBookmarks",
   "description": "Bookmark extension",
   "version": "2.0",
@@ -29,6 +29,6 @@
   "page_action": {
     "default_icon": "images/bookmark_bw.png",
     "default_popup": "manage.html",
-    "default_title": "Manage ownBookmarks"
+    "default_title": "Manage myBookmarks"
   }
 }
