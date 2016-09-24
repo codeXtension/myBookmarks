@@ -68,9 +68,9 @@ function listFiles() {
         'fields': "nextPageToken, files(id, name, webContentLink)"
     });
 
-    request.execute(function(resp) {
+    request.then(function(resp) {
         appendPre('Files:');
-        var files = resp.files;
+        var files = resp.result.files;
         if (files && files.length > 0) {
             for (var i = 0; i < files.length; i++) {
                 var file = files[i];
@@ -87,16 +87,16 @@ function listFiles() {
 function createBookmarkFile() {
     gapi.client.drive.files.create(
         {
-            'fields': 'id, webContentLink',
+            'fields': 'id, name, webContentLink',
             'name': 'bookmarks.json',
             'parents': ['appDataFolder'],
             'mimeType': 'application/json',
             'uploadType': 'media',
             'body': '{"id": "1","modifiedByMeTime": "12123","name": "asdasd","md5Checksum": "12asdd"}'
         }
-    ).execute(function(file) {
-        appendPre("Created file " + file.name + " id: " + file.id);
-        ID = file.id;
+    ).then(function(file) {
+        appendPre("Created file " + file.result.name + " id: " + file.result.id);
+        ID = file.result.id;
     });
 }
 
@@ -106,7 +106,7 @@ function readBookmarkFile() {
             'fileId' : ID,
             'fields': 'appProperties,capabilities,contentHints,createdTime,description,explicitlyTrashed,fileExtension,folderColorRgb,fullFileExtension,headRevisionId,iconLink,id,imageMediaMetadata,isAppAuthorized,kind,lastModifyingUser,md5Checksum,mimeType,modifiedByMeTime,modifiedTime,name,originalFilename,ownedByMe,owners,parents,permissions,properties,quotaBytesUsed,shared,sharedWithMeTime,sharingUser,size,spaces,starred,thumbnailLink,trashed,version,videoMediaMetadata,viewedByMe,viewedByMeTime,viewersCanCopyContent,webContentLink,webViewLink,writersCanShare'
         }
-    ).execute(function(file) {
+    ).then(function(file) {
         appendPre("Getting file " + file.name + " id: " + file.id + ", downloaded from: " + file.webContentLink);
 
         $.get( file.webContentLink, function( data ) {
