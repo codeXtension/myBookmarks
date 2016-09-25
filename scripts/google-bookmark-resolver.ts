@@ -13,43 +13,25 @@ export class GoogleBookmarkResolver implements BookmarksResolver {
 
     public findAll():Promise<Array<Bookmark>> {
         return new Promise(function (resolve, reject) {
-            let result = [];
+            let result:Array<Bookmark>;
             GoogleBookmarkResolver.prototype.connect().then(function (result) {
                 GoogleBookmarkResolver.prototype.retrieveFile().then(function (file) {
-                    if (file == undefined) {
-                        GoogleBookmarkResolver.prototype.create().then(function (newFile) {
-                            console.log('file created - ' + newFile.result.id);
-                            GoogleBookmarkResolver.prototype.update(newFile.result.id, newFile.result).then(function (data) {
-                                GoogleBookmarkResolver.prototype.readContent(data.result.id).then(function (out) {
-                                    console.log(out);
-                                });
-                            });
-                        });
-                    } else {
-                        GoogleBookmarkResolver.prototype.delete(file.id).then(function (isDeleted) {
-                            if (isDeleted) {
-                                console.log('file deleted - ' + file.id);
-                                GoogleBookmarkResolver.prototype.create().then(function (newFile) {
-                                    console.log('file created - ' + newFile.result.id);
-                                    GoogleBookmarkResolver.prototype.update(newFile.result.id, newFile.result).then(function (data) {
-                                        GoogleBookmarkResolver.prototype.readContent(data.result.id).then(function (out) {
-                                            console.log(out);
-                                        });
-                                    });
-                                });
-                            }
+                    if (file != undefined) {
+                        GoogleBookmarkResolver.prototype.readContent(file.id).then(function (out) {
+                            result = JSON.parse(out);
+                            resolve(result);
                         });
                     }
                 });
             });
         });
-    }
+    };
 
     public find(criteria:string):Promise<Array<Bookmark>> {
         return new Promise(function (resolve, reject) {
 
         });
-    }
+    };
 
     public updateContent(dataInput:any):void {
         GoogleBookmarkResolver.prototype.connect().then(function (result) {
