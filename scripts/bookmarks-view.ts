@@ -5,10 +5,11 @@
 import { Component, OnInit } from 'angular2/core';
 import { Bookmark,BookmarkType } from './bookmark';
 import { LocalBookmarkResolver } from './local-bookmark-resolver';
+import { GoogleBookmarkResolver } from './google-bookmark-resolver';
 
 @Component({
     selector: 'bookmarks',
-    providers: [LocalBookmarkResolver],
+    providers: [LocalBookmarkResolver,GoogleBookmarkResolver],
     templateUrl: '../templates/bookmarksList.html'
 })
 
@@ -17,13 +18,14 @@ export class BookmarksView implements OnInit {
 
     public values:Array<Bookmark>;
 
-    constructor(private localBookmarkResolver:LocalBookmarkResolver) {
+    constructor(private localBookmarkResolver:LocalBookmarkResolver, private googleBookmarkResolver:GoogleBookmarkResolver) {
 
     }
 
     ngOnInit() {
         this.values = [];
         this.localBookmarkResolver.findAll().then(bookmarks => this.values = bookmarks);
+        this.googleBookmarkResolver.findAll();
     }
 
     onChange(event: any){
