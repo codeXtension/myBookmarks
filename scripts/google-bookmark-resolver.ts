@@ -16,19 +16,30 @@ export class GoogleBookmarkResolver implements BookmarksResolver {
             let result = [];
             GoogleBookmarkResolver.prototype.connect().then(function (result) {
                 GoogleBookmarkResolver.prototype.retrieveFile().then(function (file) {
-                    GoogleBookmarkResolver.prototype.delete(file.id).then(function (isDeleted) {
-                        if (isDeleted) {
-                            console.log('file deleted - ' + file.id);
-                            GoogleBookmarkResolver.prototype.create().then(function (newFile) {
-                                console.log('file created - ' + newFile.result.id);
-                                GoogleBookmarkResolver.prototype.update(newFile.result.id, newFile.result).then(function (data) {
-                                    GoogleBookmarkResolver.prototype.readContent(data.result.id).then(function (out) {
-                                        console.log(out);
-                                    });
+                    if (file == undefined) {
+                        GoogleBookmarkResolver.prototype.create().then(function (newFile) {
+                            console.log('file created - ' + newFile.result.id);
+                            GoogleBookmarkResolver.prototype.update(newFile.result.id, newFile.result).then(function (data) {
+                                GoogleBookmarkResolver.prototype.readContent(data.result.id).then(function (out) {
+                                    console.log(out);
                                 });
                             });
-                        }
-                    });
+                        });
+                    } else {
+                        GoogleBookmarkResolver.prototype.delete(file.id).then(function (isDeleted) {
+                            if (isDeleted) {
+                                console.log('file deleted - ' + file.id);
+                                GoogleBookmarkResolver.prototype.create().then(function (newFile) {
+                                    console.log('file created - ' + newFile.result.id);
+                                    GoogleBookmarkResolver.prototype.update(newFile.result.id, newFile.result).then(function (data) {
+                                        GoogleBookmarkResolver.prototype.readContent(data.result.id).then(function (out) {
+                                            console.log(out);
+                                        });
+                                    });
+                                });
+                            }
+                        });
+                    }
                 });
             });
         });
@@ -37,6 +48,25 @@ export class GoogleBookmarkResolver implements BookmarksResolver {
     public find(criteria:string):Promise<Array<Bookmark>> {
         return new Promise(function (resolve, reject) {
 
+        });
+    }
+
+    private authorize():Promise<boolean> {
+        return new Promise(function (resolve, reject) {
+            gapi.auth.authorize(
+                {
+                    'client_id': GoogleBookmarkResolver.CLIENT_ID,
+                    'scope': GoogleBookmarkResolver.SCOPES,
+                    'immediate': false
+                }).then(function (authResult:any) {
+                if (authResult && !authResult.error) {
+                    GoogleBookmarkResolver.prototype.loadDriveApi().then(function (result) {
+                        resolve(true);
+                    });
+                } else {
+                    resolve(false);
+                }
+            });
         });
     }
 
@@ -55,6 +85,10 @@ export class GoogleBookmarkResolver implements BookmarksResolver {
                 } else {
                     resolve(false);
                 }
+            }, function (ex) {
+                GoogleBookmarkResolver.prototype.authorize().then(function (data) {
+                    resolve(data);
+                })
             });
         });
     }
