@@ -8,7 +8,8 @@ import { BookmarksResolver, Bookmark, BookmarkType } from './bookmark';
 
 export class GoogleBookmarkResolver implements BookmarksResolver {
 
-    private static CLIENT_ID:string = '1071613291540-4annmvf181briffa0d49isd3dg9jfo3r.apps.googleusercontent.com';
+//    private static CLIENT_ID:string = '1071613291540-4annmvf181briffa0d49isd3dg9jfo3r.apps.googleusercontent.com';
+    private static CLIENT_ID:string = '1071613291540-f749747scb0ncduk7tol9pro2ccd9eu1.apps.googleusercontent.com';
     private static SCOPES:Array<string> = ['https://www.googleapis.com/auth/drive.appdata'];
 
     public findAll():Promise<Array<Bookmark>> {

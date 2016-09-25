@@ -1,10 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>myBookmarks options</title>
+    <!-- 1. Load libraries -->
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+    <script src="node_modules/rxjs/bundles/Rx.js"></script>
+    <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
+    <script src="scripts/system.config.js"></script>
+    <script src="https://apis.google.com/js/client.js"></script>
+    <!-- 2. Configure SystemJS -->
+
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
+    <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
-
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-4 col-xs-offset-4" style="height:200px"></div>
+        <div class="col-xs-6 col-xs-offset-3">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+                <li role="presentation" class="active"><a href="#general" aria-controls="general" role="tab" data-toggle="tab">General</a></li>
+                <li role="presentation"><a href="#owncloud" aria-controls="owncloud" role="tab" data-toggle="tab">ownCloud</a></li>
+                <li role="presentation"><a href="#gdrive" aria-controls="gdrive" role="tab" data-toggle="tab">Google Drive</a></li>
+                <li role="presentation" class="disabled"><a>Microsoft OneDrive</a></li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="general">1.</div>
+                <div role="tabpanel" class="tab-pane" id="owncloud">2.</div>
+                <div role="tabpanel" class="tab-pane" id="gdrive">3.</div>
+                <div role="tabpanel" class="tab-pane" id="onedrive">.4.</div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
