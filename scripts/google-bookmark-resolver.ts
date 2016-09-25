@@ -92,9 +92,7 @@ export class GoogleBookmarkResolver implements BookmarksResolver {
                     resolve(false);
                 }
             }, function (ex) {
-                GoogleBookmarkResolver.prototype.authorize().then(function (data) {
-                    resolve(data);
-                })
+                resolve(false);
             });
         });
     }

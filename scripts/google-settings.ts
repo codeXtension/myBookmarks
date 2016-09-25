@@ -15,14 +15,17 @@ import { GoogleBookmarkResolver } from './google-bookmark-resolver';
 /// <reference path="./lib/chrome.d.ts"/>
 export class GoogleSettings implements OnInit {
 
-    constructor(private googleBookmarkResolver:GoogleBookmarkResolver) {
+    public connected:boolean;
 
+    constructor(private googleBookmarkResolver:GoogleBookmarkResolver) {
+        this.connected = false;
     }
 
     ngOnInit() {
+        this.googleBookmarkResolver.connect().then(isConneced => this.connected = isConneced);
     }
 
     authorize(event : any) {
-        this.googleBookmarkResolver.authorize();
+        this.googleBookmarkResolver.authorize().then(isConnected => this.connected = isConnected);
     }
 }
