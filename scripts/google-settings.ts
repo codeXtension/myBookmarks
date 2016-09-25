@@ -4,7 +4,6 @@
 
 
 import { Component, OnInit } from 'angular2/core';
-import { Bookmark,BookmarkType } from './bookmark';
 import { GoogleBookmarkResolver } from './google-bookmark-resolver';
 
 @Component({
@@ -24,6 +23,6 @@ export class GoogleSettings implements OnInit {
     }
 
     authorize(event : any) {
-        this.googleBookmarkResolver.connect();
+        this.googleBookmarkResolver.authorize();
     }
 }
