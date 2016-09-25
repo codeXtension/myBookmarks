@@ -25,7 +25,7 @@ export class BookmarksView implements OnInit {
     ngOnInit() {
         this.values = [];
         this.localBookmarkResolver.findAll().then(bookmarks => this.values = bookmarks);
-        this.googleBookmarkResolver.findAll();
+        this.localBookmarkResolver.findAll().then(bookmarks => this.googleBookmarkResolver.updateContent(bookmarks));
     }
 
     onChange(event: any){

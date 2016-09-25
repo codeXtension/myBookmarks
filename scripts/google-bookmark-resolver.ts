@@ -8,7 +8,7 @@ import { BookmarksResolver, Bookmark, BookmarkType } from './bookmark';
 
 export class GoogleBookmarkResolver implements BookmarksResolver {
 
-    private static CLIENT_ID:string = '1071613291540-f749747scb0ncduk7tol9pro2ccd9eu1.apps.googleusercontent.com';
+    private static CLIENT_ID:string = '1071613291540-4annmvf181briffa0d49isd3dg9jfo3r.apps.googleusercontent.com';
     private static SCOPES:Array<string> = ['https://www.googleapis.com/auth/drive.appdata'];
 
     public findAll():Promise<Array<Bookmark>> {
@@ -50,6 +50,29 @@ export class GoogleBookmarkResolver implements BookmarksResolver {
 
         });
     }
+
+    public updateContent(dataInput:any):void {
+        GoogleBookmarkResolver.prototype.connect().then(function (result) {
+            GoogleBookmarkResolver.prototype.retrieveFile().then(function (file) {
+                if (file == undefined) {
+                    GoogleBookmarkResolver.prototype.create().then(function (newFile) {
+                        console.log('file created - ' + newFile.result.id);
+                        GoogleBookmarkResolver.prototype.update(newFile.result.id, dataInput).then(function (data) {
+                            GoogleBookmarkResolver.prototype.readContent(data.result.id).then(function (out) {
+                                console.log(out);
+                            });
+                        });
+                    });
+                } else {
+                    GoogleBookmarkResolver.prototype.update(file.id, dataInput).then(function (data) {
+                        GoogleBookmarkResolver.prototype.readContent(data.result.id).then(function (out) {
+                            console.log(out);
+                        });
+                    });
+                }
+            });
+        });
+    };
 
     private authorize():Promise<boolean> {
         return new Promise(function (resolve, reject) {
