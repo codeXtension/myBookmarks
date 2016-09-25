@@ -57,7 +57,7 @@ export class GoogleBookmarkResolver implements BookmarksResolver {
         });
     };
 
-    private authorize():Promise<boolean> {
+    public authorize():Promise<boolean> {
         return new Promise(function (resolve, reject) {
             gapi.auth.authorize(
                 {
@@ -76,7 +76,7 @@ export class GoogleBookmarkResolver implements BookmarksResolver {
         });
     }
 
-    private connect():Promise<boolean> {
+    public connect():Promise<boolean> {
         return new Promise(function (resolve, reject) {
             gapi.auth.authorize(
                 {

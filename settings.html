@@ -22,21 +22,80 @@
 <body>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-xs-4 col-xs-offset-4" style="height:200px"></div>
+        <div class="col-xs-4 col-xs-offset-4 text-center" style="height:200px">
+            <h3>myBookmarks settings</h3>
+        </div>
         <div class="col-xs-6 col-xs-offset-3">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs nav-justified" role="tablist">
-                <li role="presentation" class="active"><a href="#general" aria-controls="general" role="tab" data-toggle="tab">General</a></li>
-                <li role="presentation"><a href="#owncloud" aria-controls="owncloud" role="tab" data-toggle="tab">ownCloud</a></li>
-                <li role="presentation"><a href="#gdrive" aria-controls="gdrive" role="tab" data-toggle="tab">Google Drive</a></li>
-                <li role="presentation" class="disabled"><a>Microsoft OneDrive</a></li>
+                <li role="presentation" class="active"><a href="#general" aria-controls="general" role="tab"
+                                                          data-toggle="tab">General</a></li>
+                <li role="presentation"><a href="#owncloud" aria-controls="owncloud" role="tab" data-toggle="tab">ownCloud</a>
+                </li>
+                <li role="presentation"><a href="#gdrive" aria-controls="gdrive" role="tab" data-toggle="tab">Google
+                    Drive</a></li>
+                <li role="presentation" class="disabled"><a title="Coming soon!">Microsoft OneDrive</a></li>
             </ul>
             <!-- Tab panes -->
             <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="general">1.</div>
-                <div role="tabpanel" class="tab-pane" id="owncloud">2.</div>
-                <div role="tabpanel" class="tab-pane" id="gdrive">3.</div>
-                <div role="tabpanel" class="tab-pane" id="onedrive">.4.</div>
+                <div role="tabpanel" class="tab-pane active" id="general">
+                    <p></p>
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-sm-10">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox"/> Display local bookmarks
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox"/> Display static cloud
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="alert alert-info text-center" role="alert"><strong>myBookmarks</strong> version 1.0, developed by <a href="http://codextension.io">CodeXtension.io</a> (<a href="https://github.com/codeXtension/myBookmarks">GitHub repository</a>)</div>
+                    </form>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="owncloud">
+                    <p></p>
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="serverUrl" class="col-sm-2 control-label">Server URL</label>
+                            <div class="col-sm-10">
+                                <input type="url" class="form-control" id="serverUrl">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label">Username</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="username">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd" class="col-sm-2 control-label">Password</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="pwd">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10"><p></p>
+                                <button type="button" class="btn btn-primary">Test connection ...</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="gdrive">
+                    <googleSettings>Loading ...</googleSettings>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="onedrive">
+
+                </div>
             </div>
         </div>
     </div>

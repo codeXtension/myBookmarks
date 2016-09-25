@@ -36,4 +36,8 @@ export class BookmarksView implements OnInit {
             this.googleBookmarkResolver.find(value).then(bookmarks => this.values = bookmarks);
         }
     }
+
+    openSettings(event: any) {
+        chrome.tabs.create({'url': "/settings.html"});
+    }
 }
