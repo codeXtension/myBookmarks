@@ -3,11 +3,12 @@
  */
 
 
-import { Component, OnInit } from 'angular2/core';
+import { Component, OnInit, Input } from 'angular2/core';
 import { GoogleBookmarkResolver } from './google-bookmark-resolver';
 
 @Component({
     selector: 'googleSettings',
+    inputs: ['header'],
     providers: [GoogleBookmarkResolver],
     templateUrl: '../templates/googleSettings.html'
 })
@@ -16,6 +17,7 @@ import { GoogleBookmarkResolver } from './google-bookmark-resolver';
 export class GoogleSettings implements OnInit {
 
     public connected:boolean;
+    public header:boolean;
 
     constructor(private googleBookmarkResolver:GoogleBookmarkResolver) {
         this.connected = false;
