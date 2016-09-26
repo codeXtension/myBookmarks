@@ -6,6 +6,7 @@ import { BookmarksResolver, Bookmark, BookmarkType } from './../bookmark';
 
 @Injectable()
 
+/// <reference path="./../lib/chrome.d.ts"/>
 export class GoogleBookmarkResolver implements BookmarksResolver {
 
 //    private static CLIENT_ID:string = '1071613291540-4annmvf181briffa0d49isd3dg9jfo3r.apps.googleusercontent.com'; // Laptop
@@ -69,6 +70,7 @@ export class GoogleBookmarkResolver implements BookmarksResolver {
                 }).then(function (authResult:any) {
                 if (authResult && !authResult.error) {
                     GoogleBookmarkResolver.prototype.loadDriveApi().then(function (result) {
+                        openedWindows[0].close();
                         resolve(true);
                     });
                 } else {
