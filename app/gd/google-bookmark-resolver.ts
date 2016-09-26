@@ -71,11 +71,18 @@ export class GoogleBookmarkResolver implements BookmarksResolver {
                 if (authResult && !authResult.error) {
                     GoogleBookmarkResolver.prototype.loadDriveApi().then(function (result) {
                         openedWindows[0].close();
+                        openedWindows = [];
                         resolve(true);
                     });
                 } else {
+                    openedWindows[0].close();
+                    openedWindows = [];
                     resolve(false);
                 }
+            }, function(ex){
+                openedWindows[0].close();
+                openedWindows = [];
+                resolve(false);
             });
         });
     }
