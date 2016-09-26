@@ -24,16 +24,16 @@ export class BookmarksView implements OnInit {
 
     ngOnInit() {
         this.values = [];
-        this.googleBookmarkResolver.findAll().then(bookmarks => this.values = bookmarks);
+        this.localBookmarkResolver.findAll().then(bookmarks => this.values = bookmarks);
     }
 
     onChange(event: any){
         let value = event.target.value;
 
         if(value.trim().length==0){
-            this.googleBookmarkResolver.findAll().then(bookmarks => this.values = bookmarks);
+            this.localBookmarkResolver.findAll().then(bookmarks => this.values = bookmarks);
         } else{
-            this.googleBookmarkResolver.find(value).then(bookmarks => this.values = bookmarks);
+            this.localBookmarkResolver.find(value).then(bookmarks => this.values = bookmarks);
         }
     }
 
