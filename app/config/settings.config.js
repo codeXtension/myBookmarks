@@ -4,7 +4,7 @@ System.config({
     },
     packages: {
         app: {
-            main: './boot.js',
+            main: './settings-view.js',
             defaultExtension: 'js'
         },
         scripts: {
@@ -13,5 +13,5 @@ System.config({
         }
     }
 });
-System.import('app/boot')
+System.import('app/settings-view')
     .then(null, console.error.bind(console));

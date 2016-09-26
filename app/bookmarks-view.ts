@@ -2,10 +2,11 @@
  * Created by elie on 04.07.2016.
  */
 
-import { Component, OnInit } from 'angular2/core';
+import { Component, OnInit, enableProdMode } from 'angular2/core';
 import { Bookmark,BookmarkType } from './bookmark';
 import { LocalBookmarkResolver } from './local/local-bookmark-resolver';
 import { GoogleBookmarkResolver } from './gd/google-bookmark-resolver';
+import { bootstrap }    from 'angular2/platform/browser';
 
 @Component({
     selector: 'bookmarks',
@@ -41,3 +42,5 @@ export class BookmarksView implements OnInit {
         chrome.tabs.create({'url': "/settings.html"});
     }
 }
+enableProdMode();
+bootstrap(BookmarksView);
