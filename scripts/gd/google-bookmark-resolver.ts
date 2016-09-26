@@ -2,7 +2,7 @@
  * Created by elie on 06.07.2016.
  */
 import { Injectable } from 'angular2/core';
-import { BookmarksResolver, Bookmark, BookmarkType } from './bookmark';
+import { BookmarksResolver, Bookmark, BookmarkType } from './../bookmark';
 
 @Injectable()
 

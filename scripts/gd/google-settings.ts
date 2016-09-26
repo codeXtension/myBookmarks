@@ -12,7 +12,7 @@ import { GoogleBookmarkResolver } from './google-bookmark-resolver';
     templateUrl: '../templates/googleSettings.html'
 })
 
-/// <reference path="./lib/chrome.d.ts"/>
+/// <reference path="./../lib/chrome.d.ts"/>
 export class GoogleSettings implements OnInit {
 
     public connected:boolean;

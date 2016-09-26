@@ -4,8 +4,8 @@
 
 import { Component, OnInit } from 'angular2/core';
 import { Bookmark,BookmarkType } from './bookmark';
-import { LocalBookmarkResolver } from './local-bookmark-resolver';
-import { GoogleBookmarkResolver } from './google-bookmark-resolver';
+import { LocalBookmarkResolver } from './local/local-bookmark-resolver';
+import { GoogleBookmarkResolver } from './gd/google-bookmark-resolver';
 
 @Component({
     selector: 'bookmarks',
