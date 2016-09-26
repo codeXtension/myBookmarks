@@ -1,10 +1,13 @@
 System.config({
+    map : {
+        app: 'app'
+    },
     packages: {
-        scripts: {
-            format: 'register',
+        app: {
+            main: './boot.js',
             defaultExtension: 'js'
         }
     }
 });
-System.import('scripts/boot')
+System.import('app/boot')
     .then(null, console.error.bind(console));
