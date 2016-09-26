@@ -12,6 +12,7 @@ export class GoogleBookmarkResolver implements BookmarksResolver {
    private static CLIENT_ID:string = '834001424495-8tl72jg8ikcmij01lm587k4fc1af8olb.apps.googleusercontent.com'; // Laptop
 
     private static SCOPES:Array<string> = ['https://www.googleapis.com/auth/drive.appdata'];
+    private values:Array<Bookmark>;
 
     public findAll():Promise<Array<Bookmark>> {
         return new Promise(function (resolve, reject) {
@@ -21,6 +22,7 @@ export class GoogleBookmarkResolver implements BookmarksResolver {
                     if (file != undefined) {
                         GoogleBookmarkResolver.prototype.readContent(file.id).then(function (out) {
                             result = JSON.parse(out);
+                            this.values = result;
                             resolve(result);
                         });
                     }
@@ -31,7 +33,14 @@ export class GoogleBookmarkResolver implements BookmarksResolver {
 
     public find(criteria:string):Promise<Array<Bookmark>> {
         return new Promise(function (resolve, reject) {
-
+            let results:Array<Bookmark> = [];
+            for(let i=0; i<this.values.length;i++){
+                let val = this.values[i];
+                if(val.title.includes(criteria)){
+                    results.push(val);
+                }
+            }
+            resolve(results);
         });
     };
 
