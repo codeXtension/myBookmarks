@@ -24,7 +24,8 @@ export class SettingsView implements OnInit {
         this.connected = false;
     }
 
-    isConnected() {
+    isConnected(event:any) {
+        console.debug("checking if SettingsView.isConnected()");
         this.googleBookmarkResolver.connect().then(data => this.connected = data);
     }
 }

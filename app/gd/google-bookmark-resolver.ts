@@ -9,16 +9,14 @@ import { BookmarksResolver, Bookmark, BookmarkType } from './../bookmark';
 /// <reference path="./../lib/chrome.d.ts"/>
 export class GoogleBookmarkResolver implements BookmarksResolver {
 
-//    private static CLIENT_ID:string = '1071613291540-4annmvf181briffa0d49isd3dg9jfo3r.apps.googleusercontent.com'; // Laptop
-//    private static CLIENT_ID:string = '1071613291540-f749747scb0ncduk7tol9pro2ccd9eu1.apps.googleusercontent.com'; // PC
-    private static CLIENT_ID:string = '1071613291540-pn4rvvmvf31gf6fu62erjo5gl6knb2fv.apps.googleusercontent.com'; // workPC
+   private static CLIENT_ID:string = '834001424495-8tl72jg8ikcmij01lm587k4fc1af8olb.apps.googleusercontent.com'; // Laptop
 
     private static SCOPES:Array<string> = ['https://www.googleapis.com/auth/drive.appdata'];
 
     public findAll():Promise<Array<Bookmark>> {
         return new Promise(function (resolve, reject) {
             let result:Array<Bookmark>;
-            GoogleBookmarkResolver.prototype.connect().then(function (result) {
+            GoogleBookmarkResolver.prototype.connect().then(function (res) {
                 GoogleBookmarkResolver.prototype.retrieveFile().then(function (file) {
                     if (file != undefined) {
                         GoogleBookmarkResolver.prototype.readContent(file.id).then(function (out) {

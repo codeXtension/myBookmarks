@@ -4,7 +4,7 @@
                                               data-toggle="tab">General</a></li>
     <li role="presentation"><a href="#owncloud" aria-controls="owncloud" role="tab" data-toggle="tab">ownCloud</a>
     </li>
-    <li role="presentation" (click)="isConnected"><a href="#gdrive" aria-controls="gdrive" role="tab" data-toggle="tab">Google
+    <li role="presentation"><a href="#gdrive" aria-controls="gdrive" (click)="isConnected($event)" role="tab" data-toggle="tab">Google
         Drive</a></li>
     <li role="presentation" class="disabled"><a title="Coming soon!">Microsoft OneDrive</a></li>
 </ul>

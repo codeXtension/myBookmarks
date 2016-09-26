@@ -19,11 +19,9 @@ export class GoogleSettings implements OnInit {
     public connected:boolean;
 
     constructor(private googleBookmarkResolver:GoogleBookmarkResolver) {
-        this.connected = false;
     }
 
     ngOnInit() {
-        this.googleBookmarkResolver.connect().then(data => this.connected = data);
     }
 
     authorize(event : any) {
