@@ -4,7 +4,8 @@
         <div class="col-sm-10">
             <div class="checkbox">
                 <label>
-                    <input (change)="authorize($event)" [checked]="connected" [disabled]="connected" type="checkbox"/> Allow myBookmark to access its own application space on google drive. <p class="text-info">A file named 'bookmarks.json' will be stored on your drive space reserved for myBookmarks. The file size should not increase to more than 1 MB.</p>
+                    <input (change)="authorize($event)" [checked]="connected" [disabled]="connected" type="checkbox"/> Allow myBookmark to access its own application space on google drive. <p class="text-info" [class.hidden]="connected">A file named 'bookmarks.json' will be stored on your drive space reserved for myBookmarks. The file size should not increase to more than 1 MB.</p>
+                    <p class="text-info" [class.hidden]="!connected">To revoke the permission, go to your google drive settings page, then click "Managing Apps" and disconnect "myBookmarks".</p>
                 </label>
             </div>
         </div>
