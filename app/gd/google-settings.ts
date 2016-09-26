@@ -8,7 +8,7 @@ import { GoogleBookmarkResolver } from './google-bookmark-resolver';
 
 @Component({
     selector: 'googleSettings',
-    inputs: ['header'],
+    inputs: ['connected'],
     providers: [GoogleBookmarkResolver],
     templateUrl: '../templates/googleSettings.html'
 })
@@ -17,7 +17,6 @@ import { GoogleBookmarkResolver } from './google-bookmark-resolver';
 export class GoogleSettings implements OnInit {
 
     public connected:boolean;
-    public header:boolean;
 
     constructor(private googleBookmarkResolver:GoogleBookmarkResolver) {
         this.connected = false;
@@ -29,9 +28,5 @@ export class GoogleSettings implements OnInit {
 
     authorize(event : any) {
         this.googleBookmarkResolver.authorize().then(isConnected => this.connected = isConnected);
-    }
-
-    isConnected() {
-        this.googleBookmarkResolver.connect().then(data => this.connected = data);
     }
 }
