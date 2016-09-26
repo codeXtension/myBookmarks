@@ -22,10 +22,14 @@ export class GoogleSettings implements OnInit {
     }
 
     ngOnInit() {
-        this.googleBookmarkResolver.connect().then(isConneced => this.connected = isConneced);
+        this.googleBookmarkResolver.connect().then(data => this.connected = data);
     }
 
     authorize(event : any) {
         this.googleBookmarkResolver.authorize().then(isConnected => this.connected = isConnected);
+    }
+
+    isConnected() {
+        this.googleBookmarkResolver.connect().then(data => this.connected = data);
     }
 }
