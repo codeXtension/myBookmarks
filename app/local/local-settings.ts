@@ -8,7 +8,7 @@ import { LocalBookmarkResolver } from './local-bookmark-resolver';
 @Component({
     selector: 'localSettings',
     providers: [LocalBookmarkResolver],
-    templateUrl: '../templates/localSettings.html'
+    templateUrl: '../views/local_settings.html'
 })
 
 /// <reference path="./../lib/chrome.d.ts"/>

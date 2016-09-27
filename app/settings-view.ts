@@ -8,7 +8,7 @@ import { GoogleBookmarkResolver } from './gd/google-bookmark-resolver';
 
 @Component({
     selector: 'settings',
-    templateUrl: '../templates/settingsTabloid.html',
+    templateUrl: '../views/settings_view.html',
     providers: [GoogleBookmarkResolver],
     directives: [GoogleSettings,OcSettings,LocalSettings]
 })

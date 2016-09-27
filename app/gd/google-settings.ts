@@ -10,7 +10,7 @@ import { GoogleBookmarkResolver } from './google-bookmark-resolver';
     selector: 'googleSettings',
     inputs: ['connected'],
     providers: [GoogleBookmarkResolver],
-    templateUrl: '../templates/googleSettings.html'
+    templateUrl: '../views/google_settings.html'
 })
 
 /// <reference path="./../lib/chrome.d.ts"/>
@@ -22,9 +22,11 @@ export class GoogleSettings implements OnInit {
     }
 
     ngOnInit() {
+        this.connected = false;
     }
 
     authorize(event : any) {
+        this.connected = true;
         this.googleBookmarkResolver.authorize().then(isConnected => this.connected = isConnected);
     }
 }

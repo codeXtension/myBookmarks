@@ -8,7 +8,7 @@ import { OcBookmarkResolver } from './oc-bookmark-resolver';
 @Component({
     selector: 'ocSettings',
     providers: [OcBookmarkResolver],
-    templateUrl: '../templates/ownCloudSettings.html'
+    templateUrl: '../views/oc_settings.html'
 })
 
 /// <reference path="./../lib/chrome.d.ts"/>

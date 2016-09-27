@@ -11,7 +11,7 @@ import { bootstrap }    from 'angular2/platform/browser';
 @Component({
     selector: 'bookmarks',
     providers: [LocalBookmarkResolver,GoogleBookmarkResolver],
-    templateUrl: '../templates/bookmarksList.html'
+    templateUrl: '../views/bookmarks_view.html'
 })
 
 /// <reference path="./lib/chrome.d.ts"/>
