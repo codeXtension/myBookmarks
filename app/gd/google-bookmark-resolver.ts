@@ -21,7 +21,7 @@ export class GoogleBookmarkResolver implements BookmarksResolver {
 
     public findAll():Promise<Array<Bookmark>> {
         return new Promise(function (resolve, reject) {
-            if(this.canRefresh || this.values === undefined || this.values.length==0){
+            if(this.canRefresh || this.values == undefined || this.values.length==0){
                 let result:Array<Bookmark>;
                 GoogleBookmarkResolver.prototype.connect().then(function (res) {
                     if(res){
@@ -54,11 +54,8 @@ export class GoogleBookmarkResolver implements BookmarksResolver {
         });
     };
 
-    public refresh():Promise<boolean> {
-        return new Promise(function(resolve, reject) {
-            this.canRefresh=true;
-            resolve(true);
-        });
+    public refresh():void {
+        this.canRefresh=true;
     }
 
     public updateContent(dataInput:any):void {

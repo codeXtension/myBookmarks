@@ -20,10 +20,7 @@ export class OcBookmarkResolver implements BookmarksResolver {
     };
 
 
-    public refresh():Promise<boolean> {
-        return new Promise(function(resolve, reject) {
-            this.canRefresh=true;
-            resolve(true);
-        });
+    public refresh():void {
+        this.canRefresh=true;
     }
 }

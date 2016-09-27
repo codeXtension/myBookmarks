@@ -10,7 +10,7 @@ import { bootstrap }    from 'angular2/platform/browser';
 
 @Component({
     selector: 'bookmarks',
-    providers: [LocalBookmarkResolver,GoogleBookmarkResolver],
+    providers: [LocalBookmarkResolver, GoogleBookmarkResolver],
     templateUrl: '../views/bookmarks_view.html'
 })
 
@@ -29,28 +29,28 @@ export class BookmarksView implements OnInit {
         this.googleBookmarkResolver.findAll().then(bookmarks => this.values = bookmarks);
     }
 
-    onChange(event: any){
+    onChange(event:any) {
         this.selectedValue = event.target.value;
 
-        if(this.selectedValue.trim().length==0){
+        if (this.selectedValue.trim().length == 0) {
             this.googleBookmarkResolver.findAll().then(bookmarks => this.values = bookmarks);
-        } else{
+        } else {
             this.googleBookmarkResolver.find(this.selectedValue).then(bookmarks => this.values = bookmarks);
         }
     }
 
-    openSettings(event: any) {
+    openSettings(event:any) {
         chrome.tabs.create({'url': "/settings.html"});
     }
 
-    refreshView(event: any){
-        this.googleBookmarkResolver.refresh().then(function(){
-            if(this.selectedValue.trim().length==0){
-                this.googleBookmarkResolver.findAll().then(bookmarks => this.values = bookmarks);
-            } else{
-                this.googleBookmarkResolver.find(this.selectedValue).then(bookmarks => this.values = bookmarks);
-            }
-        });
+    refreshView(event:any) {
+        this.googleBookmarkResolver.refresh();
+
+        if (this.selectedValue != undefined && this.selectedValue.trim().length == 0) {
+            this.googleBookmarkResolver.findAll().then(bookmarks => this.values = bookmarks);
+        } else {
+            this.googleBookmarkResolver.find(this.selectedValue).then(bookmarks => this.values = bookmarks);
+        }
     }
 }
 enableProdMode();
