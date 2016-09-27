@@ -11,23 +11,33 @@ export class GoogleBookmarkResolver implements BookmarksResolver {
 
    private static CLIENT_ID:string = '834001424495-8tl72jg8ikcmij01lm587k4fc1af8olb.apps.googleusercontent.com'; // Laptop
 
+    private canRefresh:boolean;
     private static SCOPES:Array<string> = ['https://www.googleapis.com/auth/drive.appdata'];
     private values:Array<Bookmark>;
 
+    constructor(){
+       this.canRefresh = true;
+    }
+
     public findAll():Promise<Array<Bookmark>> {
         return new Promise(function (resolve, reject) {
-            let result:Array<Bookmark>;
-            GoogleBookmarkResolver.prototype.connect().then(function (res) {
-                GoogleBookmarkResolver.prototype.retrieveFile().then(function (file) {
-                    if (file != undefined) {
-                        GoogleBookmarkResolver.prototype.readContent(file.id).then(function (out) {
-                            result = JSON.parse(out);
-                            this.values = result;
-                            resolve(result);
+            if(this.canRefresh || this.values === undefined || this.values.length==0){
+                let result:Array<Bookmark>;
+                GoogleBookmarkResolver.prototype.connect().then(function (res) {
+                    if(res){
+                        GoogleBookmarkResolver.prototype.retrieveFile().then(function (file) {
+                            if (file != undefined) {
+                                GoogleBookmarkResolver.prototype.readContent(file.id).then(function (out) {
+                                    result = JSON.parse(out);
+                                    this.values = result;
+                                    this.canRefresh = false;
+                                    resolve(result);
+                                });
+                            }
                         });
                     }
                 });
-            });
+            }
         });
     };
 
@@ -43,6 +53,13 @@ export class GoogleBookmarkResolver implements BookmarksResolver {
             resolve(results);
         });
     };
+
+    public refresh():Promise<boolean> {
+        return new Promise(function(resolve, reject) {
+            this.canRefresh=true;
+            resolve(true);
+        });
+    }
 
     public updateContent(dataInput:any):void {
         GoogleBookmarkResolver.prototype.connect().then(function (result) {

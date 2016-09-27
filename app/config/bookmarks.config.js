@@ -5,7 +5,7 @@ $(function(){
         },
         packages: {
             app: {
-                main: './settings-view.js',
+                main: './bookmarks-view.js',
                 defaultExtension: 'js'
             },
             scripts: {
@@ -14,6 +14,6 @@ $(function(){
             }
         }
     });
-    System.import('app/settings-view')
+    System.import('app/bookmarks-view')
         .then(null, console.error.bind(console));
 });

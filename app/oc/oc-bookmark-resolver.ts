@@ -4,6 +4,9 @@ import { BookmarksResolver, Bookmark, BookmarkType } from './../bookmark';
 @Injectable()
 
 export class OcBookmarkResolver implements BookmarksResolver {
+
+    private canRefresh:boolean;
+
     public findAll():Promise<Array<Bookmark>> {
         return new Promise(function (resolve, reject) {
 
@@ -15,4 +18,12 @@ export class OcBookmarkResolver implements BookmarksResolver {
 
         });
     };
+
+
+    public refresh():Promise<boolean> {
+        return new Promise(function(resolve, reject) {
+            this.canRefresh=true;
+            resolve(true);
+        });
+    }
 }

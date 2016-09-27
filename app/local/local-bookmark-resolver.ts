@@ -7,6 +7,11 @@ import { BookmarksResolver, Bookmark, BookmarkType } from './../bookmark';
 @Injectable()
 
 export class LocalBookmarkResolver implements BookmarksResolver {
+    private canRefresh:boolean;
+
+    constructor(){
+        this.canRefresh = true;
+    }
 
     public findAll():Promise<Array<Bookmark>> {
         return new Promise(function(resolve, reject) {
@@ -37,6 +42,13 @@ export class LocalBookmarkResolver implements BookmarksResolver {
                     resolve(result);
                 }
             );
+        });
+    }
+
+    public refresh():Promise<boolean> {
+        return new Promise(function(resolve, reject) {
+            this.canRefresh=true;
+            resolve(true);
         });
     }
 

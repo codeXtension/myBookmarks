@@ -18,6 +18,7 @@ import { bootstrap }    from 'angular2/platform/browser';
 export class BookmarksView implements OnInit {
 
     public values:Array<Bookmark>;
+    private selectedValue:string;
 
     constructor(private localBookmarkResolver:LocalBookmarkResolver, private googleBookmarkResolver:GoogleBookmarkResolver) {
 
@@ -29,17 +30,27 @@ export class BookmarksView implements OnInit {
     }
 
     onChange(event: any){
-        let value = event.target.value;
+        this.selectedValue = event.target.value;
 
-        if(value.trim().length==0){
+        if(this.selectedValue.trim().length==0){
             this.googleBookmarkResolver.findAll().then(bookmarks => this.values = bookmarks);
         } else{
-            this.googleBookmarkResolver.find(value).then(bookmarks => this.values = bookmarks);
+            this.googleBookmarkResolver.find(this.selectedValue).then(bookmarks => this.values = bookmarks);
         }
     }
 
     openSettings(event: any) {
         chrome.tabs.create({'url': "/settings.html"});
+    }
+
+    refreshView(event: any){
+        this.googleBookmarkResolver.refresh().then(function(){
+            if(this.selectedValue.trim().length==0){
+                this.googleBookmarkResolver.findAll().then(bookmarks => this.values = bookmarks);
+            } else{
+                this.googleBookmarkResolver.find(this.selectedValue).then(bookmarks => this.values = bookmarks);
+            }
+        });
     }
 }
 enableProdMode();

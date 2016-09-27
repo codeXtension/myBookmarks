@@ -19,4 +19,5 @@ export enum BookmarkType {
 export interface BookmarksResolver {
     findAll():Promise<Array<Bookmark>>;
     find(criteria:string):Promise<Array<Bookmark>>;
+    refresh():Promise<boolean>;
 }
