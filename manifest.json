@@ -1,0 +1,34 @@
+{
+  "manifest_version": 2,
+  "content_security_policy": "script-src 'self' https://apis.google.com 'unsafe-eval'; object-src 'self'",
+  "name": "myBookmarks",
+  "description": "Bookmark extension",
+  "version": "1.0",
+  "options_page": "settings.html",
+  "homepage_url": "http://www.codextension.io",
+  "icons": {
+    "128": "images/logo.png"
+  },
+  "background": {
+    "page": "background.html",
+    "persistent": false
+  },
+  "chrome_url_overrides": {
+    "newtab": "bookmark.html"
+  },
+  "permissions": [
+    "contextMenus",
+    "tabs",
+    "storage",
+    "bookmarks",
+    "activeTab",
+    "declarativeContent",
+    "https://ajax.googleapis.com/",
+    "<all_urls>"
+  ],
+  "page_action": {
+    "default_icon": "images/bookmark_bw.png",
+    "default_popup": "manage.html",
+    "default_title": "Manage myBookmarks"
+  }
+}

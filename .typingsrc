@@ -1,0 +1,2 @@
+proxy=http://www-le.dienste.t-systems.com:80
+rejectUnauthorized=false
