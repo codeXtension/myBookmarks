@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
 import { Bookmark,BookmarkType } from './bookmark';
 import { LocalBookmarkResolver } from './local/local-bookmark-resolver';
 import { GoogleBookmarkResolver } from './gd/google-bookmark-resolver';
+import {SafeUrl, DomSanitizer} from '@angular/platform-browser';
 
 @Component({
     selector: 'bookmarks',
@@ -17,7 +18,7 @@ export class BookmarksView implements OnInit {
     public values:Array<Bookmark>;
     private selectedValue:string;
 
-    constructor(private localBookmarkResolver:LocalBookmarkResolver, private googleBookmarkResolver:GoogleBookmarkResolver) {
+    constructor(private localBookmarkResolver:LocalBookmarkResolver, private googleBookmarkResolver:GoogleBookmarkResolver, private sanitizer:DomSanitizer) {
 
     }
 
@@ -48,5 +49,9 @@ export class BookmarksView implements OnInit {
         } else {
             this.localBookmarkResolver.find(this.selectedValue).then(bookmarks => this.values = bookmarks);
         }
+    }
+
+    cleanURL(url:string):SafeUrl{
+        return this.sanitizer.bypassSecurityTrustUrl('chrome://favicon/' + url);
     }
 }

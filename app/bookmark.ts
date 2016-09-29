@@ -1,8 +1,10 @@
 /**
  * Created by elie on 04.07.2016.
  */
+import {SafeUrl} from '@angular/platform-browser';
 export class Bookmark {
     constructor(public url:string,
+                public favIco:SafeUrl,
                 public title:string,
                 public tags:string[],
                 public src:BookmarkType,

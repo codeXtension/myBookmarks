@@ -3,25 +3,27 @@
  */
 import { Injectable } from '@angular/core';
 import { BookmarksResolver, Bookmark, BookmarkType } from './../bookmark';
+import {SafeUrl, DomSanitizer} from '@angular/platform-browser';
 
 @Injectable()
 
 export class LocalBookmarkResolver implements BookmarksResolver {
     private canRefresh:boolean;
 
-    constructor(){
+    constructor(private sanitizer:DomSanitizer){
         this.canRefresh = true;
     }
 
     public findAll():Promise<Array<Bookmark>> {
+        let me:any = this;
         return new Promise(function(resolve, reject) {
             let result = [];
             chrome.bookmarks.getTree(
-                function (bookmarkTreeNodes) {
+                bookmarkTreeNodes => {
                     if (bookmarkTreeNodes[0].children && bookmarkTreeNodes[0].children[0].children) {
                         for (let i = 0; i < bookmarkTreeNodes[0].children[0].children.length; i++) {
                             let level0 = bookmarkTreeNodes[0].children[0].children[i];
-                            LocalBookmarkResolver.prototype.scanLocalBookmarks(level0, [], result);
+                            me.scanLocalBookmarks(level0, [], result);
                         }
                     }
                     resolve(result);
@@ -31,13 +33,14 @@ export class LocalBookmarkResolver implements BookmarksResolver {
     }
 
     public find(criteria:string):Promise<Array<Bookmark>> {
+        let me:any = this;
         return new Promise(function(resolve, reject) {
             let result = [];
             chrome.bookmarks.search(criteria,
-                function (bookmarkTreeNodes) {
+                bookmarkTreeNodes => {
                     for (let i = 0; i < bookmarkTreeNodes.length; i++) {
                         let level0 = bookmarkTreeNodes[i];
-                        LocalBookmarkResolver.prototype.scanLocalBookmarks(level0, [], result);
+                        me.scanLocalBookmarks(level0, [], result);
                     }
                     resolve(result);
                 }
@@ -51,7 +54,8 @@ export class LocalBookmarkResolver implements BookmarksResolver {
 
     private scanLocalBookmarks(bookmarkNode:any, parentTags:any, result:Array<Bookmark>):void {
         if (bookmarkNode.url != undefined) {
-            let bookmark = new Bookmark(bookmarkNode.url, bookmarkNode.title, parentTags, BookmarkType.LOCAL, '#91205a');
+            let favIco:SafeUrl = this.sanitizer.bypassSecurityTrustUrl('chrome://favicon/' + bookmarkNode.url);
+            let bookmark = new Bookmark(bookmarkNode.url,favIco, bookmarkNode.title, parentTags, BookmarkType.LOCAL, '#91205a');
 
             result.push(bookmark);
         } else if (bookmarkNode.children != undefined) {

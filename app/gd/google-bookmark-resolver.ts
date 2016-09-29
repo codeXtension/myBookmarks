@@ -19,14 +19,15 @@ export class GoogleBookmarkResolver implements BookmarksResolver {
     }
 
     public findAll():Promise<Array<Bookmark>> {
+        let me:any=this;
         return new Promise(function (resolve, reject) {
             if(this.canRefresh || this.values == undefined || this.values.length==0){
                 let result:Array<Bookmark>;
-                GoogleBookmarkResolver.prototype.connect().then(function (res) {
+                me.connect().then(function (res) {
                     if(res){
-                        GoogleBookmarkResolver.prototype.retrieveFile().then(function (file) {
+                        me.retrieveFile().then(function (file) {
                             if (file != undefined) {
-                                GoogleBookmarkResolver.prototype.readContent(file.id).then(function (out) {
+                                me.readContent(file.id).then(function (out) {
                                     result = JSON.parse(out);
                                     this.values = result;
                                     this.canRefresh = false;
@@ -58,20 +59,21 @@ export class GoogleBookmarkResolver implements BookmarksResolver {
     }
 
     public updateContent(dataInput:any):void {
-        GoogleBookmarkResolver.prototype.connect().then(function (result) {
+        let me:any=this;
+        me.connect().then(function (result) {
             GoogleBookmarkResolver.prototype.retrieveFile().then(function (file) {
                 if (file == undefined) {
-                    GoogleBookmarkResolver.prototype.create().then(function (newFile) {
+                    me.create().then(function (newFile) {
                         console.log('file created - ' + newFile.result.id);
-                        GoogleBookmarkResolver.prototype.update(newFile.result.id, dataInput).then(function (data) {
-                            GoogleBookmarkResolver.prototype.readContent(data.result.id).then(function (out) {
+                        me.update(newFile.result.id, dataInput).then(function (data) {
+                            me.readContent(data.result.id).then(function (out) {
                                 console.log(out);
                             });
                         });
                     });
                 } else {
-                    GoogleBookmarkResolver.prototype.update(file.id, dataInput).then(function (data) {
-                        GoogleBookmarkResolver.prototype.readContent(data.result.id).then(function (out) {
+                    me.update(file.id, dataInput).then(function (data) {
+                        me.readContent(data.result.id).then(function (out) {
                             console.log(out);
                         });
                     });
@@ -81,6 +83,7 @@ export class GoogleBookmarkResolver implements BookmarksResolver {
     };
 
     public authorize():Promise<boolean> {
+        let me:any=this;
         return new Promise(function (resolve, reject) {
             gapi.auth.authorize(
                 {
@@ -89,7 +92,7 @@ export class GoogleBookmarkResolver implements BookmarksResolver {
                     'immediate': false
                 }).then(function (authResult:any) {
                 if (authResult && !authResult.error) {
-                    GoogleBookmarkResolver.prototype.loadDriveApi().then(function (result) {
+                    me.loadDriveApi().then(function (result) {
                         openedWindows[0].close();
                         openedWindows = [];
                         resolve(true);
@@ -108,6 +111,7 @@ export class GoogleBookmarkResolver implements BookmarksResolver {
     }
 
     public connect():Promise<boolean> {
+        let me:any=this;
         return new Promise(function (resolve, reject) {
             gapi.auth.authorize(
                 {
@@ -116,7 +120,7 @@ export class GoogleBookmarkResolver implements BookmarksResolver {
                     'immediate': true
                 }).then(function (authResult:any) {
                 if (authResult && !authResult.error) {
-                    GoogleBookmarkResolver.prototype.loadDriveApi().then(function (result) {
+                    me.loadDriveApi().then(function (result) {
                         resolve(true);
                     });
                 } else {
@@ -137,6 +141,7 @@ export class GoogleBookmarkResolver implements BookmarksResolver {
     }
 
     private retrieveFile():Promise<any> {
+        let me:any=this;
         let request = gapi.client.drive.files.list({
             'spaces': 'appDataFolder',
             'pageSize': 10,
@@ -152,7 +157,7 @@ export class GoogleBookmarkResolver implements BookmarksResolver {
                     if (files.length > 1) {
                         for (let i = 1; i < files.length; i++) {
                             let file = files[i];
-                            GoogleBookmarkResolver.prototype.delete(file.id);
+                            me.delete(file.id);
                         }
                     }
                     resolve(file);
