@@ -1,7 +1,7 @@
 /**
  * Created by eelkhour on 28.09.2016.
  */
-import { NgModule }      from '@angular/core';
+import { NgModule, enableProdMode }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BookmarksView }   from './bookmarks-view';
 
@@ -11,3 +11,5 @@ import { BookmarksView }   from './bookmarks-view';
     bootstrap:    [BookmarksView]
 })
 export class AppModule { }
+
+// enableProdMode();

@@ -1,7 +1,7 @@
 /**
  * Created by eelkhour on 28.09.2016.
  */
-import { NgModule }      from '@angular/core';
+import { NgModule, enableProdMode }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { SettingsView }   from './settings-view';
 import {LocalSettings} from "./local/local-settings";
@@ -14,3 +14,5 @@ import {GoogleSettings} from "./gd/google-settings";
     bootstrap:    [SettingsView]
 })
 export class AppModule { }
+
+// enableProdMode();
