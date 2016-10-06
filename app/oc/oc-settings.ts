@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
 import { OcBookmarkResolver } from './oc-bookmark-resolver';
 import { OcConnection } from './oc-connection';
 import {PromiseObservable} from "rxjs/observable/PromiseObservable";
+import {OcCredentials} from './oc-credentials';
 
 @Component({
     selector: 'ocSettings',
@@ -25,12 +26,14 @@ export class OcSettings implements OnInit {
 
     public validateCredentials(user:string, pwd:string, url:string):void{
         let me = this;
-        this.ocConnection.validateCredentials(user, pwd, url).then(function(data){
+        let credentials:OcCredentials = new OcCredentials(user, pwd, url);
+
+        this.ocConnection.validateCredentials(credentials).then(function(data){
             me.isConnected = data;
         });
     }
 
-    public saveCredentials(user:string, pwd:string, url:string):void{
+    public saveCredentials(credentials:OcCredentials):void{
 
     }
 

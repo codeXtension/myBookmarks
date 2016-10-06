@@ -2,7 +2,8 @@
  * Created by elie on 06.10.2016.
  */
 import { Injectable } from '@angular/core';
-import {Http, Headers} from '@angular/http'
+import {Http, Headers} from '@angular/http';
+import {OcCredentials} from './oc-credentials';
 
 @Injectable()
 
@@ -16,13 +17,13 @@ export class OcConnection {
 
     }
 
-    public validateCredentials(username:string, password:string, serverUrl:string):Promise<any> {
+    public validateCredentials(credentials:OcCredentials):Promise<any> {
         let headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        headers.append('Authorization', 'Basic ' + window.btoa(username + ":" + password));
+        headers.append('Authorization', 'Basic ' + window.btoa(credentials.username + ":" + credentials.password));
         let me = this;
         return new Promise(function(resolve, reject) {
-            me.http.post(serverUrl + OcConnection.bookmarkUri,
+            me.http.post(credentials.serverUrl + OcConnection.bookmarkUri,
                 '',
                 {headers: headers}
             ).subscribe(
