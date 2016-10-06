@@ -22,6 +22,7 @@ export class OcSettings implements OnInit {
 
     ngOnInit() {
         this.isConnected = null;
+        this.loadCredentials();
     }
 
     public validateCredentials(user:string, pwd:string, url:string):void{
@@ -30,16 +31,24 @@ export class OcSettings implements OnInit {
 
         this.ocConnection.validateCredentials(credentials).then(function(data){
             me.isConnected = data;
+            if(data) {
+              me.saveCredentials(credentials);
+            }
         });
     }
 
-    public saveCredentials(credentials:OcCredentials):void{
-
+    private saveCredentials(credentials:OcCredentials):void{
+        chrome.storage.sync.set({'bookmarksData': credentials}, function () {
+                  console.info('Data saved with success!');
+              });
     }
 
-    public loadCredentials():Promise<any>{
+    public loadCredentials():Promise<OcCredentials>{
         return new Promise(function(resolve, reject){
-
+          chrome.storage.sync.get('bookmarksData', function (item) {
+                      console.info(item);
+                      resolve(item);
+                  });
         });
     }
 }
