@@ -4,9 +4,10 @@
 import { NgModule, enableProdMode }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BookmarksView }   from './bookmarks-view';
+import { HttpModule } from '@angular/http';
 
 @NgModule({
-    imports:      [BrowserModule],
+    imports:      [BrowserModule, HttpModule],
     declarations: [BookmarksView],
     bootstrap:    [BookmarksView]
 })

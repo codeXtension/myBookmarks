@@ -29,8 +29,8 @@ export class GoogleBookmarkResolver implements BookmarksResolver {
                             if (file != undefined) {
                                 me.readContent(file.id).then(function (out) {
                                     result = JSON.parse(out);
-                                    this.values = result;
-                                    this.canRefresh = false;
+                                    me.values = result;
+                                    me.canRefresh = false;
                                     resolve(result);
                                 });
                             }

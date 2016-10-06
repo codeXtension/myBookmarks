@@ -7,9 +7,10 @@ import { SettingsView }   from './settings-view';
 import {LocalSettings} from "./local/local-settings";
 import {OcSettings} from "./oc/oc-settings";
 import {GoogleSettings} from "./gd/google-settings";
+import { HttpModule } from '@angular/http';
 
 @NgModule({
-    imports:      [BrowserModule],
+    imports:      [BrowserModule, HttpModule],
     declarations: [SettingsView, LocalSettings, OcSettings, GoogleSettings],
     bootstrap:    [SettingsView]
 })
