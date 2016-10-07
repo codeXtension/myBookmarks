@@ -3,3 +3,11 @@ app/**/*.js*
 *.iml
 .idea**
 node_modules**
+rebel.xml
+*/test-output/**
+.settings
+.classpath
+*.graphml
+*/bin/**
+.project
+*/target/**
