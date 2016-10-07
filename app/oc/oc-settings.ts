@@ -16,13 +16,14 @@ import {OcCredentials} from './oc-credentials';
 
 export class OcSettings implements OnInit {
     public isConnected:boolean;
+    public credentials:OcCredentials;
 
     constructor(private ocBookmarkResolver:OcBookmarkResolver, private ocConnection: OcConnection) {
     }
 
     ngOnInit() {
         this.isConnected = null;
-        this.loadCredentials();
+        this.loadCredentials().then(data => this.credentials = data);
     }
 
     public validateCredentials(user:string, pwd:string, url:string):void{
