@@ -19,23 +19,33 @@ export class OcSettings implements OnInit {
     public credentials:OcCredentials;
 
     constructor(private ocBookmarkResolver:OcBookmarkResolver, private ocConnection: OcConnection) {
+      this.credentials = new OcCredentials('','','');
     }
 
     ngOnInit() {
         this.isConnected = null;
-        this.loadCredentials().then(data => this.credentials = data);
+        this.loadCredentials().then(data => {
+          if(data.username != undefined){
+            this.credentials = data
+          }
+        });
     }
 
-    public validateCredentials(user:string, pwd:string, url:string):void{
+    public validateCredentials():void{
         let me = this;
-        let credentials:OcCredentials = new OcCredentials(user, pwd, url);
 
-        this.ocConnection.validateCredentials(credentials).then(function(data){
+        this.ocConnection.validateCredentials(this.credentials).then(function(data){
             me.isConnected = data;
             if(data) {
-              me.saveCredentials(credentials);
+              me.saveCredentials(this.credentials);
             }
         });
+    }
+
+    public clearCredentials():void {
+      chrome.storage.sync.set({'bookmarksData': {}}, function () {
+                console.info('Data cleared with success!');
+            });
     }
 
     private saveCredentials(credentials:OcCredentials):void{
@@ -46,9 +56,8 @@ export class OcSettings implements OnInit {
 
     public loadCredentials():Promise<OcCredentials>{
         return new Promise(function(resolve, reject){
-          chrome.storage.sync.get('bookmarksData', function (item) {
-                      console.info(item);
-                      resolve(item);
+          chrome.storage.sync.get('bookmarksData', function (item:any) {
+                      resolve(item.bookmarksData);
                   });
         });
     }
