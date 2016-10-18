@@ -1,26 +1,17 @@
-<div class="panel panel-primary">
-    <div class="panel-heading">
-        <h3 class="panel-title">
-            <span class="fa fa-link" aria-hidden="true"></span>&nbsp;Bookmarks
-            <span title="Settings" class="fa fa-cog pull-right" (click)="openSettings($event)" aria-hidden="true"
-                  style="cursor:pointer;"></span>
-            <span title="Refresh" class="fa fa-refresh pull-right" (click)="refreshView($event)" aria-hidden="true" style="cursor:pointer;"></span>
-        </h3>
-    </div>
-    <div class="panel-body">
-        <div class="form-group-sm">
-
-        </div>
+<div class="col-xs-12 col-md-8">
+    <div class="middle-search">
         <div>
             <input type="search" (keyup)="onChange($event)" id="searchText" class="form-control"
                    placeholder="Search ...">
         </div>
     </div>
-    <div class="separator">
-        <div class="list-group bookmark-scrollable bookmarkList">
-            <a *ngFor="let value of values" href="{{value.url}}" target="_blank" class="list-group-item square-border">
-                <img [src]="value.favIco"/>&nbsp;{{value.title}}
-            </a>
-        </div>
+
+</div>
+<div class="col-xs-12 col-md-4 no-padding">
+    <div class="panel panel-primary bookmark-scrollable bookmarkList no-margin-bottom">
+        <a *ngFor="let value of values" href="{{value.url}}" target="_blank" class="list-group-item square-border">
+            <img [src]="value.favIco"/>&nbsp;{{value.title}}
+        </a>
     </div>
+
 </div>

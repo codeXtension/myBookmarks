@@ -1,6 +1,6 @@
 .bookmark-scrollable {
-    max-height: 500px;
     overflow-y: auto;
+    height: 770px;
 }
 
 .bookmarkList li {
@@ -49,4 +49,18 @@ a.list-group-item {
     border-top-right-radius: 0px;
     border-top-left-radius: 0px;
     border-top: none;
+}
+
+.no-padding {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.no-margin-bottom {
+    margin-bottom: 0px;
+}
+
+.middle-search {
+    width: 40%;
+    margin: auto;
 }
