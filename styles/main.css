@@ -1,5 +1,5 @@
 .bookmark-scrollable {
-    overflow-y: scroll;
+    overflow-y: auto;
     height: 100%;
 }
 
@@ -60,7 +60,15 @@ a.list-group-item {
     margin-bottom: 0px;
 }
 
-.middle-search {
-    width: 40%;
-    margin: auto;
+@media (min-width: 766px) {
+    .middle-search {
+        width: 30%;
+        margin: auto;
+    }
+}
+@media (max-width: 765px) {
+    .middle-search {
+        width: 100%;
+        margin: auto;
+    }
 }

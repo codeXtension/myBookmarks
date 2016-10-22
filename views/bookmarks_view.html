@@ -1,4 +1,4 @@
-<div class="col-xs-12 col-md-8">
+<div class="col-xs-12 col-sm-9">
     <div class="middle-search">
         <div>
             <input type="search" (keyup)="onChange($event)" id="searchText" class="form-control"
@@ -7,7 +7,7 @@
     </div>
 
 </div>
-<div class="col-xs-12 col-md-4 no-padding">
+<div class="col-xs-12 col-sm-3 no-padding">
     <div class="panel panel-primary bookmark-scrollable bookmarkList no-margin-bottom">
         <a *ngFor="let value of values" href="{{value.url}}" target="_blank" class="list-group-item square-border">
             <img [src]="value.favIco"/>&nbsp;{{value.title}}
