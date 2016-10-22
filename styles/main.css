@@ -1,6 +1,6 @@
 .bookmark-scrollable {
-    overflow-y: auto;
-    height: 770px;
+    overflow-y: scroll;
+    height: 100%;
 }
 
 .bookmarkList li {
