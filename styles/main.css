@@ -1,6 +1,13 @@
 .bookmark-scrollable {
     overflow-y: auto;
-    height: 100%;
+    height: 100vh;
+}
+
+.div-middle {
+    height: 100vh;
+    text-align: center;
+    top: 50vh;
+    position: relative
 }
 
 .bookmarkList li {
