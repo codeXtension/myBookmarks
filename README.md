@@ -2,4 +2,4 @@
 Bookmarks Manager for Chrome (OC, Local, Google Drive and more ...)
 
 
-https://www.sitepoint.com/chrome-extension-angular-2/
+http://nvie.com/posts/a-successful-git-branching-model/
