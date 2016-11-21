@@ -57,6 +57,11 @@ a.list-group-item {
 }
 
 @media (min-width: 766px) {
+    #canvasInAPerfectWorld {
+        width: 70vw;
+        height: 90vh;
+    }
+
     .middle-search {
         width: 30%;
         margin: auto;
@@ -75,6 +80,10 @@ a.list-group-item {
     }
 }
 @media (max-width: 765px) {
+    #canvasInAPerfectWorld {
+        display: none;
+    }
+
     .middle-search {
         width: 100%;
         margin: auto;
@@ -111,3 +120,4 @@ a.list-group-item {
 /* add padding  */
 .left-addon input  { padding-left:  30px; }
 .right-addon input { padding-right: 30px; }
+
