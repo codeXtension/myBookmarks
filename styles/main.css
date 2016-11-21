@@ -1,15 +1,3 @@
-.bookmark-scrollable {
-    overflow-y: auto;
-    height: 100vh;
-}
-
-.div-middle {
-    height: 100vh;
-    text-align: center;
-    top: 50vh;
-    position: relative
-}
-
 .bookmarkList li {
     display: block;
     list-style-image: none;
@@ -73,11 +61,35 @@ a.list-group-item {
         width: 30%;
         margin: auto;
     }
+
+    .bookmark-scrollable {
+        overflow-y: auto;
+        height: 100vh;
+    }
+
+    .div-middle {
+        height: 100vh;
+        text-align: center;
+        top: 50vh;
+        position: relative
+    }
 }
 @media (max-width: 765px) {
     .middle-search {
         width: 100%;
         margin: auto;
+    }
+
+    .bookmark-scrollable {
+        overflow-y: auto;
+        height: 90vh;
+    }
+
+    .div-middle {
+        height: 90vh;
+        text-align: center;
+        top: 50vh;
+        position: relative
     }
 }
 
