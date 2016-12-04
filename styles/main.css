@@ -1,123 +1,135 @@
 .bookmarkList li {
-    display: block;
-    list-style-image: none;
+  display: block;
+  list-style-image: none;
 }
-
 a.list-group-item {
-    max-width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    border-left:none;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-left: none;
 }
-
 ::-webkit-scrollbar {
-    width: 7px;
-    height: 5px;
-    background-color: rgba(255, 255, 255, 0);
-    -webkit-border-radius: 0px;
+  width: 7px;
+  height: 5px;
+  background-color: rgba(255, 255, 255, 0);
+  -webkit-border-radius: 0px;
 }
-
 ::-webkit-scrollbar:hover {
-    width: 7px;
+  width: 7px;
 }
-
 ::-webkit-scrollbar-thumb {
-    background: lightgrey;
-    -webkit-border-radius: 0px;
+  background: lightgrey;
+  -webkit-border-radius: 0px;
 }
-
 ::-webkit-scrollbar-thumb:hover,
 ::-webkit-scrollbar-thumb:active {
-    background: #2196f3;
+  background: #2196f3;
 }
-
 .bookmarkList li {
-    display: block;
-    list-style-image: none;
+  display: block;
+  list-style-image: none;
 }
-
 .separator {
-    border-top: solid 1px lightgrey;
+  border-top: solid 1px lightgrey;
 }
-
 .square-border:first-child {
-    border-top-right-radius: 0px;
-    border-top-left-radius: 0px;
-    border-top: none;
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
+  border-top: none;
 }
-
 .no-padding {
-    padding-left: 0px;
-    padding-right: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
 }
-
 .no-margin-bottom {
-    margin-bottom: 0px;
+  margin-bottom: 0px;
 }
-
 @media (min-width: 766px) {
-    #canvasInAPerfectWorld {
-        width: 70vw;
-        height: 90vh;
-    }
+  #tagCloud {
+    height: 90vh;
+  }
+  #tagCloud > .row > .col-md-1 {
+    height: 8.8vh;
+  }
+  #tagCloud > .row > .col-md-2 {
+    height: 19vh;
+  }
+  #tagCloud > .row > div {
+    /*
+          i can fit 12 or 6 columns,
+          and rows according to the screen size, while taking into account that there the height of each cell is equal to its width minus 30 (padiding)
 
-    .middle-search {
-        width: 30%;
-        margin: auto;
-    }
-
-    .bookmark-scrollable {
-        overflow-y: auto;
-        height: 100vh;
-    }
-
-    .div-middle {
-        height: 100vh;
-        text-align: center;
-        top: 50vh;
-        position: relative
-    }
+        */
+  }
+  .middle-search {
+    width: 30%;
+    margin: auto;
+  }
+  .bookmark-scrollable {
+    overflow-y: auto;
+    height: 100vh;
+  }
+  .div-middle {
+    height: 100vh;
+    text-align: center;
+    top: 50vh;
+    position: relative;
+  }
 }
 @media (max-width: 765px) {
-    #canvasInAPerfectWorld {
-        display: none;
-    }
-
-    .middle-search {
-        width: 100%;
-        margin: auto;
-    }
-
-    .bookmark-scrollable {
-        overflow-y: auto;
-        height: 90vh;
-    }
-
-    .div-middle {
-        height: 90vh;
-        text-align: center;
-        top: 50vh;
-        position: relative
-    }
-}
-
-.inner-addon {
+  #tagCloud {
+    display: none;
+  }
+  .middle-search {
+    width: 100%;
+    margin: auto;
+  }
+  .bookmark-scrollable {
+    overflow-y: auto;
+    height: 90vh;
+  }
+  .div-middle {
+    height: 90vh;
+    text-align: center;
+    top: 50vh;
     position: relative;
+  }
 }
-
+.inner-addon {
+  position: relative;
+}
 /* style icon */
 .inner-addon .fa {
   position: absolute;
   padding: 10px;
   pointer-events: none;
 }
-
 /* align icon */
-.left-addon .fa  { left:  0px;}
-.right-addon .fa { right: 0px;}
-
+.left-addon .fa {
+  left: 0px;
+}
+.right-addon .fa {
+  right: 0px;
+}
 /* add padding  */
-.left-addon input  { padding-left:  30px; }
-.right-addon input { padding-right: 30px; }
-
+.left-addon input {
+  padding-left: 30px;
+}
+.right-addon input {
+  padding-right: 30px;
+}
+.clickable {
+  cursor: pointer;
+}
+.bottom-align-text {
+  position: absolute;
+  bottom: 10px;
+  right: 15px;
+}
+.thin-border {
+  border-style: none;
+}
+.thin-border:hover {
+  background-color: whitesmoke;
+}

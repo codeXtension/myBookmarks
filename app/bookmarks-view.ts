@@ -16,6 +16,7 @@ import {SafeUrl, DomSanitizer} from '@angular/platform-browser';
 export class BookmarksView implements OnInit {
 
     public values:Array<Bookmark>;
+    public availableTags:Array<Array<String>>;
     private selectedValue:string;
 
     constructor(private localBookmarkResolver:LocalBookmarkResolver, private googleBookmarkResolver:GoogleBookmarkResolver, private sanitizer:DomSanitizer) {
@@ -24,7 +25,18 @@ export class BookmarksView implements OnInit {
 
     ngOnInit() {
         this.values = [];
-        this.localBookmarkResolver.findAll().then(bookmarks => this.values = bookmarks);
+        this.availableTags = [];
+        this.localBookmarkResolver.findAll()
+            .then(bookmarks => this.values = bookmarks)
+            .then(bookmarks => {
+                let data:String[] = [];
+                for(let value of bookmarks) {
+                    data = _.union(data,value.tags);
+                }
+                for (let i=0; i<data.length; i+=6) {
+                   this.availableTags.push(data.slice(i,i+6));
+                }
+        });
     }
 
     onChange(event:any) {
@@ -35,6 +47,10 @@ export class BookmarksView implements OnInit {
         } else {
             this.localBookmarkResolver.find(this.selectedValue).then(bookmarks => this.values = bookmarks);
         }
+    }
+
+    onTagClick(event:any, tag:String) {
+
     }
 
     openSettings(event:any) {
