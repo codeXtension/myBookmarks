@@ -19,6 +19,7 @@ export class BookmarksView implements OnInit {
     public filteredValues:Array<Bookmark>;
     public availableTags:Array<Array<String>>;
     private selectedValue:string;
+    private selectedTag:string;
 
     constructor(private localBookmarkResolver:LocalBookmarkResolver, private googleBookmarkResolver:GoogleBookmarkResolver, private sanitizer:DomSanitizer) {
 
@@ -46,9 +47,22 @@ export class BookmarksView implements OnInit {
         this.selectedValue = event.target.value;
 
         if (this.selectedValue.trim().length == 0) {
-            this.filteredValues = this.values;
+            this.filteredValues = [];
+            for(let value of this.values){
+                if(_.contains(value.tags, this.selectedTag)){
+                    this.filteredValues.push(value);
+                }
+            }
         } else {
-            this.localBookmarkResolver.find(this.selectedValue).then(bookmarks => this.filteredValues = bookmarks);
+            let result:Array<Bookmark> = [];
+            for(let value of this.filteredValues){
+               if(value.title.toLowerCase().indexOf(this.selectedValue.toLowerCase())>-1){
+                   result.push(value);
+               } else if(value.url.toLowerCase().indexOf(this.selectedValue.toLowerCase())>-1){
+                   result.push(value);
+               }
+            }
+            this.filteredValues = result;
         }
     }
 
@@ -61,7 +75,9 @@ export class BookmarksView implements OnInit {
         }
         if(_.isEqual(result, this.filteredValues)){
             this.filteredValues = this.values;
+            this.selectedTag = null;
         }else{
+            this.selectedTag = tag;
             this.filteredValues = result;
         }
     }
