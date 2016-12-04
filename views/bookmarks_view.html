@@ -8,7 +8,7 @@
     </div>
     <div id="tagCloud">
       <div *ngFor="let tags of availableTags" class="row">
-          <div (click)="onTagClick($event, tag)" *ngFor="let tag of tags" class="col-md-2 clickable thin-border"><div class="bottom-align-text">{{tag}}</div></div>
+          <div (click)="onTagClick($event, tag)" *ngFor="let tag of tags" class="col-md-2 clickable thin-border"><div class="bottom-align-text"><i class="fa fa-upload" aria-hidden="true"></i>&nbsp;&nbsp;{{tag}}</div></div>
       </div>
     </div>
 

@@ -59,7 +59,11 @@ export class BookmarksView implements OnInit {
                 result.push(value);
             }
         }
-        this.filteredValues = result;
+        if(_.isEqual(result, this.filteredValues)){
+            this.filteredValues = this.values;
+        }else{
+            this.filteredValues = result;
+        }
     }
 
     openSettings(event:any) {
