@@ -48,6 +48,27 @@ export class LocalBookmarkResolver implements BookmarksResolver {
         });
     }
 
+/*    public findByTag(tagName:string):Promise<Array<Bookmark>> {
+        let me:any = this;
+        return new Promise(function(resolve, reject) {
+            let result = [];
+            chrome.bookmarks.search(tagName,
+                bookmarkTreeNodes => {
+                    for (let i = 0; i < bookmarkTreeNodes.length; i++) {
+                        let node = bookmarkTreeNodes[i];
+                        chrome.bookmarks.getChildren(node.id, subTreeNodes => {
+                            for (let j = 0; j < subTreeNodes.length; j++) {
+                                let level0 = subTreeNodes[j];
+                                me.scanLocalBookmarks(level0, [], result);
+                            }
+                        });
+                    }
+                    resolve(result);
+                }
+            );
+        });
+    }*/
+
     public refresh():void {
        this.canRefresh = true;
     }

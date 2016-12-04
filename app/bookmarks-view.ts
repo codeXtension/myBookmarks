@@ -16,6 +16,7 @@ import {SafeUrl, DomSanitizer} from '@angular/platform-browser';
 export class BookmarksView implements OnInit {
 
     public values:Array<Bookmark>;
+    public filteredValues:Array<Bookmark>;
     public availableTags:Array<Array<String>>;
     private selectedValue:string;
 
@@ -25,9 +26,11 @@ export class BookmarksView implements OnInit {
 
     ngOnInit() {
         this.values = [];
+        this.filteredValues = [];
         this.availableTags = [];
         this.localBookmarkResolver.findAll()
             .then(bookmarks => this.values = bookmarks)
+            .then(bookmarks => this.filteredValues = bookmarks)
             .then(bookmarks => {
                 let data:String[] = [];
                 for(let value of bookmarks) {
@@ -43,14 +46,20 @@ export class BookmarksView implements OnInit {
         this.selectedValue = event.target.value;
 
         if (this.selectedValue.trim().length == 0) {
-            this.localBookmarkResolver.findAll().then(bookmarks => this.values = bookmarks);
+            this.filteredValues = this.values;
         } else {
-            this.localBookmarkResolver.find(this.selectedValue).then(bookmarks => this.values = bookmarks);
+            this.localBookmarkResolver.find(this.selectedValue).then(bookmarks => this.filteredValues = bookmarks);
         }
     }
 
-    onTagClick(event:any, tag:String) {
-
+    onTagClick(event:any, tag:string) {
+        let result:Array<Bookmark> = [];
+        for(let value of this.values){
+            if(_.contains(value.tags, tag)){
+                result.push(value);
+            }
+        }
+        this.filteredValues = result;
     }
 
     openSettings(event:any) {
@@ -61,9 +70,9 @@ export class BookmarksView implements OnInit {
         this.googleBookmarkResolver.refresh();
 
         if (this.selectedValue != undefined && this.selectedValue.trim().length == 0) {
-            this.localBookmarkResolver.findAll().then(bookmarks => this.values = bookmarks);
+            this.filteredValues = this.values;
         } else {
-            this.localBookmarkResolver.find(this.selectedValue).then(bookmarks => this.values = bookmarks);
+            this.localBookmarkResolver.find(this.selectedValue).then(bookmarks => this.filteredValues = bookmarks);
         }
     }
 
