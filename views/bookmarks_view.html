@@ -8,10 +8,11 @@
     </div>
     <div id="tagCloud">
       <div *ngFor="let tags of availableTags" class="row">
-          <div (click)="onTagClick($event, tag)" *ngFor="let tag of tags" class="col-md-2 clickable thin-border"><div class="bottom-align-text"><i class="fa fa-upload" aria-hidden="true"></i>&nbsp;&nbsp;{{tag}}</div></div>
+          <div (click)="onTagClick($event, tag)" [style.background-image]="tag.image" *ngFor="let tag of tags" class="col-md-2 clickable thin-border">
+              <div class="bottom-align-text">
+                  <label [attr.for]="tag.name"><i class="fa fa-camera mb-upload" aria-hidden="true"></i></label><input type="file" (change)="onUpload($event,tag)" accept=".jpg, .png, .jpeg, .gif|images/*" [attr.id]="tag.name">&nbsp;&nbsp;{{tag.name}}</div></div>
       </div>
     </div>
-
 </div>
 <div class="col-xs-12 col-sm-3 no-padding">
     <div class="panel panel-primary bookmark-scrollable bookmarkList no-margin-bottom">

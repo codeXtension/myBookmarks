@@ -133,3 +133,13 @@ a.list-group-item {
 .thin-border:hover {
   background-color: whitesmoke;
 }
+.mb-upload {
+  opacity: 0;
+  cursor: pointer;
+}
+.mb-upload:hover {
+  opacity: 0.8;
+}
+input[type="file"] {
+  display: none;
+}

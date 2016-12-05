@@ -7,6 +7,7 @@ import { Bookmark,BookmarkType } from './bookmark';
 import { LocalBookmarkResolver } from './local/local-bookmark-resolver';
 import { GoogleBookmarkResolver } from './gd/google-bookmark-resolver';
 import {SafeUrl, DomSanitizer} from '@angular/platform-browser';
+import {Tag} from "./Tag";
 
 @Component({
     selector: 'bookmarks',
@@ -17,9 +18,9 @@ export class BookmarksView implements OnInit {
 
     public values:Array<Bookmark>;
     public filteredValues:Array<Bookmark>;
-    public availableTags:Array<Array<String>>;
+    public availableTags:Array<Array<Tag>>;
     private selectedValue:string;
-    private selectedTag:string;
+    private selectedTag:Tag;
 
     constructor(private localBookmarkResolver:LocalBookmarkResolver, private googleBookmarkResolver:GoogleBookmarkResolver, private sanitizer:DomSanitizer) {
 
@@ -33,7 +34,7 @@ export class BookmarksView implements OnInit {
             .then(bookmarks => this.values = bookmarks)
             .then(bookmarks => this.filteredValues = bookmarks)
             .then(bookmarks => {
-                let data:String[] = [];
+                let data:Tag[] = [];
                 for(let value of bookmarks) {
                     data = _.union(data,value.tags);
                 }
@@ -41,6 +42,17 @@ export class BookmarksView implements OnInit {
                    this.availableTags.push(data.slice(i,i+6));
                 }
         });
+    }
+
+    onUpload(event:any, tag:Tag) {
+        let filesize:number = ((event.currentTarget.files[0].size/1024)/1024);
+
+        let urlCleaner:DomSanitizer=this.sanitizer;
+        let fileReader:FileReader = new FileReader();
+        fileReader.readAsDataURL(event.currentTarget.files[0]);
+        fileReader.onloadend = function(e:any){
+            tag.image = urlCleaner.bypassSecurityTrustStyle('url(' + e.target.result + ')');
+        }
     }
 
     onChange(event:any) {
@@ -66,7 +78,7 @@ export class BookmarksView implements OnInit {
         }
     }
 
-    onTagClick(event:any, tag:string) {
+    onTagClick(event:any, tag:Tag) {
         let result:Array<Bookmark> = [];
         for(let value of this.values){
             if(_.contains(value.tags, tag)){
