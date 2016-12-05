@@ -16,7 +16,10 @@ import {SafeUrl, DomSanitizer} from '@angular/platform-browser';
 export class BookmarksView implements OnInit {
 
     public values:Array<Bookmark>;
+    public filteredValues:Array<Bookmark>;
+    public availableTags:Array<Array<String>>;
     private selectedValue:string;
+    private selectedTag:string;
 
     constructor(private localBookmarkResolver:LocalBookmarkResolver, private googleBookmarkResolver:GoogleBookmarkResolver, private sanitizer:DomSanitizer) {
 
@@ -24,16 +27,58 @@ export class BookmarksView implements OnInit {
 
     ngOnInit() {
         this.values = [];
-        this.localBookmarkResolver.findAll().then(bookmarks => this.values = bookmarks);
+        this.filteredValues = [];
+        this.availableTags = [];
+        this.localBookmarkResolver.findAll()
+            .then(bookmarks => this.values = bookmarks)
+            .then(bookmarks => this.filteredValues = bookmarks)
+            .then(bookmarks => {
+                let data:String[] = [];
+                for(let value of bookmarks) {
+                    data = _.union(data,value.tags);
+                }
+                for (let i=0; i<data.length; i+=6) {
+                   this.availableTags.push(data.slice(i,i+6));
+                }
+        });
     }
 
     onChange(event:any) {
         this.selectedValue = event.target.value;
 
         if (this.selectedValue.trim().length == 0) {
-            this.localBookmarkResolver.findAll().then(bookmarks => this.values = bookmarks);
+            this.filteredValues = [];
+            for(let value of this.values){
+                if(_.contains(value.tags, this.selectedTag)){
+                    this.filteredValues.push(value);
+                }
+            }
         } else {
-            this.localBookmarkResolver.find(this.selectedValue).then(bookmarks => this.values = bookmarks);
+            let result:Array<Bookmark> = [];
+            for(let value of this.filteredValues){
+               if(value.title.toLowerCase().indexOf(this.selectedValue.toLowerCase())>-1){
+                   result.push(value);
+               } else if(value.url.toLowerCase().indexOf(this.selectedValue.toLowerCase())>-1){
+                   result.push(value);
+               }
+            }
+            this.filteredValues = result;
+        }
+    }
+
+    onTagClick(event:any, tag:string) {
+        let result:Array<Bookmark> = [];
+        for(let value of this.values){
+            if(_.contains(value.tags, tag)){
+                result.push(value);
+            }
+        }
+        if(_.isEqual(result, this.filteredValues)){
+            this.filteredValues = this.values;
+            this.selectedTag = null;
+        }else{
+            this.selectedTag = tag;
+            this.filteredValues = result;
         }
     }
 
@@ -45,9 +90,9 @@ export class BookmarksView implements OnInit {
         this.googleBookmarkResolver.refresh();
 
         if (this.selectedValue != undefined && this.selectedValue.trim().length == 0) {
-            this.localBookmarkResolver.findAll().then(bookmarks => this.values = bookmarks);
+            this.filteredValues = this.values;
         } else {
-            this.localBookmarkResolver.find(this.selectedValue).then(bookmarks => this.values = bookmarks);
+            this.localBookmarkResolver.find(this.selectedValue).then(bookmarks => this.filteredValues = bookmarks);
         }
     }
 

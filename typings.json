@@ -5,6 +5,7 @@
     "filesystem": "registry:dt/filesystem#0.0.0+20160316155526",
     "filewriter": "registry:dt/filewriter#0.0.0+20160316155526",
     "jquery": "registry:dt/jquery#1.10.0+20160908203239",
+    "underscore": "registry:dt/underscore#1.8.3+20161123125004",
     "webrtc/mediastream": "registry:dt/webrtc/mediastream#0.0.0+20160317120654"
   }
 }
