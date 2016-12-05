@@ -124,8 +124,10 @@ a.list-group-item {
 }
 .bottom-align-text {
   position: absolute;
-  bottom: 10px;
-  right: 15px;
+  bottom: 0px;
+  right: 0px;
+  background-color: white;
+  opacity: 0.8;
 }
 .thin-border {
   border-style: none;
