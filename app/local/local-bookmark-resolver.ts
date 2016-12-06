@@ -4,6 +4,7 @@
 import { Injectable } from '@angular/core';
 import { BookmarksResolver, Bookmark, BookmarkType } from './../bookmark';
 import {SafeUrl, DomSanitizer} from '@angular/platform-browser';
+import {Tag} from "../Tag";
 
 @Injectable()
 
@@ -48,11 +49,32 @@ export class LocalBookmarkResolver implements BookmarksResolver {
         });
     }
 
+/*    public findByTag(tagName:string):Promise<Array<Bookmark>> {
+        let me:any = this;
+        return new Promise(function(resolve, reject) {
+            let result = [];
+            chrome.bookmarks.search(tagName,
+                bookmarkTreeNodes => {
+                    for (let i = 0; i < bookmarkTreeNodes.length; i++) {
+                        let node = bookmarkTreeNodes[i];
+                        chrome.bookmarks.getChildren(node.id, subTreeNodes => {
+                            for (let j = 0; j < subTreeNodes.length; j++) {
+                                let level0 = subTreeNodes[j];
+                                me.scanLocalBookmarks(level0, [], result);
+                            }
+                        });
+                    }
+                    resolve(result);
+                }
+            );
+        });
+    }*/
+
     public refresh():void {
        this.canRefresh = true;
     }
 
-    private scanLocalBookmarks(bookmarkNode:any, parentTags:any, result:Array<Bookmark>):void {
+    private scanLocalBookmarks(bookmarkNode:any, parentTags:Tag[], result:Array<Bookmark>):void {
         if (bookmarkNode.url != undefined) {
             let favIco:SafeUrl = this.sanitizer.bypassSecurityTrustUrl('chrome://favicon/' + bookmarkNode.url);
             let bookmark = new Bookmark(bookmarkNode.url,favIco, bookmarkNode.title, parentTags, BookmarkType.LOCAL, '#91205a');
@@ -60,7 +82,8 @@ export class LocalBookmarkResolver implements BookmarksResolver {
             result.push(bookmark);
         } else if (bookmarkNode.children != undefined) {
             let tempTag = parentTags.slice();
-            tempTag.push(bookmarkNode.title);
+            let tag:Tag = new Tag(bookmarkNode.title, this.sanitizer.bypassSecurityTrustStyle('url()'));
+            tempTag.push(tag);
             for (var n = 0; n < bookmarkNode.children.length; n++) {
                 this.scanLocalBookmarks(bookmarkNode.children[n], tempTag, result);
             }

@@ -1,26 +1,25 @@
-<div class="panel panel-primary">
-    <div class="panel-heading">
-        <h3 class="panel-title">
-            <span class="fa fa-link" aria-hidden="true"></span>&nbsp;Bookmarks
-            <span title="Settings" class="fa fa-cog pull-right" (click)="openSettings($event)" aria-hidden="true"
-                  style="cursor:pointer;"></span>
-            <span title="Refresh" class="fa fa-refresh pull-right" (click)="refreshView($event)" aria-hidden="true" style="cursor:pointer;"></span>
-        </h3>
-    </div>
-    <div class="panel-body">
-        <div class="form-group-sm">
-
-        </div>
-        <div>
+<div class="col-xs-12 col-sm-9">
+    <div class="middle-search">
+        <div class="inner-addon left-addon">
+            <i class="fa fa-search" aria-hidden="true"></i>
             <input type="search" (keyup)="onChange($event)" id="searchText" class="form-control"
                    placeholder="Search ...">
         </div>
     </div>
-    <div class="separator">
-        <div class="list-group bookmark-scrollable bookmarkList">
-            <a *ngFor="let value of values" href="{{value.url}}" target="_blank" class="list-group-item square-border">
-                <img [src]="value.favIco"/>&nbsp;{{value.title}}
-            </a>
-        </div>
+    <div id="tagCloud">
+      <div *ngFor="let tags of availableTags" class="row">
+          <div (click)="onTagClick($event, tag)" [style.background-image]="tag.image" *ngFor="let tag of tags" class="col-md-2 clickable thin-border">
+              <div class="bottom-align-text">
+                  <label [attr.for]="tag.name">&nbsp;&nbsp;<i class="fa fa-camera mb-upload" aria-hidden="true"></i></label><input type="file" (change)="onUpload($event,tag)" accept=".jpg, .png, .jpeg, .gif|images/*" [attr.id]="tag.name">&nbsp;&nbsp;{{tag.name}}&nbsp;&nbsp;&nbsp;
+              </div>
+          </div>
+      </div>
+    </div>
+</div>
+<div class="col-xs-12 col-sm-3 no-padding">
+    <div class="panel panel-primary bookmark-scrollable bookmarkList no-margin-bottom">
+        <a *ngFor="let value of filteredValues" href="{{value.url}}" target="_blank" class="list-group-item square-border">
+            <img [src]="value.favIco"/>&nbsp;{{value.title}}
+        </a>
     </div>
 </div>
