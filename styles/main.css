@@ -47,7 +47,7 @@ a.list-group-item {
 }
 @media (min-width: 766px) {
   #tagCloud {
-    height: 90vh;
+    height: 100vh;
   }
   #tagCloud > .row > .col-md-1 {
     height: 8.8vh;
@@ -55,13 +55,7 @@ a.list-group-item {
   #tagCloud > .row > .col-md-2 {
     height: 19vh;
   }
-  #tagCloud > .row > div {
-    /*
-          i can fit 12 or 6 columns,
-          and rows according to the screen size, while taking into account that there the height of each cell is equal to its width minus 30 (padiding)
 
-        */
-  }
   .middle-search {
     width: 30%;
     margin: auto;
@@ -87,10 +81,10 @@ a.list-group-item {
   }
   .bookmark-scrollable {
     overflow-y: auto;
-    height: 90vh;
+    height: 99vh;
   }
   .div-middle {
-    height: 90vh;
+    height: 99vh;
     text-align: center;
     top: 50vh;
     position: relative;
