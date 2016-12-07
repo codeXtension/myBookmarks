@@ -127,15 +127,19 @@ a.list-group-item {
   bottom: 0px;
   right: 0px;
   background-color: white;
-  opacity: 0.8;
-    width: 100%;
-        text-align: right;
+  opacity: 0.6;
+  width: 100%;
+  text-align: right;
+
 }
+
 .thin-border {
   border-style: none;
+  filter: grayscale(100%);
 }
 .thin-border:hover {
   background-color: whitesmoke;
+  filter: grayscale(0%);
 }
 .mb-upload {
   opacity: 0;
