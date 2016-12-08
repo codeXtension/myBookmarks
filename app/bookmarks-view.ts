@@ -48,8 +48,7 @@ export class BookmarksView implements OnInit {
         let filesize:number = ((event.currentTarget.files[0].size/1024)/1024);
         let fileName:string = event.currentTarget.files[0].name;
 
-        if(filesize>200 || (!fileName.endsWith(".jpg") && !fileName.endsWith(".png") && !fileName.endsWith(".jpeg") && !fileName.endsWith(".gif"))) {
-            window.alert('Selected image size should not exceed 200KB');
+        if(filesize>0.2 || (!fileName.endsWith(".jpg") && !fileName.endsWith(".png") && !fileName.endsWith(".jpeg") && !fileName.endsWith(".gif"))) {
             return;
         }
 
