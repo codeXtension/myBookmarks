@@ -5,13 +5,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Bookmark,BookmarkType } from './bookmark';
 import { LocalBookmarkResolver } from './local/local-bookmark-resolver';
-import { GoogleBookmarkResolver } from './gd/google-bookmark-resolver';
 import {SafeUrl, DomSanitizer} from '@angular/platform-browser';
 import {Tag} from "./Tag";
 
 @Component({
     selector: 'bookmarks',
-    providers: [LocalBookmarkResolver, GoogleBookmarkResolver],
+    providers: [LocalBookmarkResolver],
     templateUrl: '../views/bookmarks_view.html'
 })
 export class BookmarksView implements OnInit {
@@ -22,7 +21,7 @@ export class BookmarksView implements OnInit {
     private selectedValue:string;
     private selectedTag:Tag;
 
-    constructor(private localBookmarkResolver:LocalBookmarkResolver, private googleBookmarkResolver:GoogleBookmarkResolver, private sanitizer:DomSanitizer) {
+    constructor(private localBookmarkResolver:LocalBookmarkResolver, private sanitizer:DomSanitizer) {
 
     }
 
@@ -104,7 +103,6 @@ export class BookmarksView implements OnInit {
     }
 
     refreshView(event:any) {
-        this.googleBookmarkResolver.refresh();
 
         if (this.selectedValue != undefined && this.selectedValue.trim().length == 0) {
             this.filteredValues = this.values;
