@@ -14,18 +14,20 @@ export class BackgroundService implements OnInit {
     ngOnInit() {
         chrome.omnibox.onInputStarted.addListener(function() {
           chrome.omnibox.setDefaultSuggestion({
-            description: 'elie is the best'
+            description: 'Search for %s'
           });
         });
 
         chrome.omnibox.onInputChanged.addListener(
           function(text, suggest) {
-
+            console.info('Text for search' + text);
           });
 
         chrome.omnibox.onInputEntered.addListener(
             function(text:string) {
-
+              chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+                chrome.tabs.update(tabs[0].id, {url: text});
+              });
           });
 
         chrome.omnibox.onInputCancelled.addListener(function() {
