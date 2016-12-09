@@ -63,12 +63,7 @@ export class BookmarksView implements OnInit {
         this.selectedValue = event.target.value;
 
         if (this.selectedValue.trim().length == 0) {
-            this.filteredValues = [];
-            for(let value of this.values){
-                if(_.contains(value.tags, this.selectedTag)){
-                    this.filteredValues.push(value);
-                }
-            }
+            this.filteredValues = this.values;
         } else {
             let result:Array<Bookmark> = [];
             for(let value of this.filteredValues){
