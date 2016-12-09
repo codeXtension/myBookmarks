@@ -24,12 +24,14 @@ export class BackgroundService implements OnInit {
 
         chrome.omnibox.onInputStarted.addListener(function () {
             chrome.omnibox.setDefaultSuggestion({
-                description: 'Searching the bookmarks for %s'
+                description: 'Searching for %s'
             });
         });
 
         chrome.omnibox.onInputChanged.addListener(
             function (text, suggest:any) { // SuggestResult[]
+                if(text.length<3) return;
+
                 let filteredValues:Array<Bookmark> = [];
                 console.info('Text for search ' + text);
                 bookmarksFinder.find(text).then(bookmarks => {
@@ -48,7 +50,11 @@ export class BackgroundService implements OnInit {
         chrome.omnibox.onInputEntered.addListener(
             function (text:string) {
                 chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+                    if(text.indexOf('http')>-1){
                     chrome.tabs.update(tabs[0].id, {url: text});
+                        }else{
+                       chrome.tabs.update(tabs[0].id, {url: 'https://www.google.com/?gws_rd=ssl#q=' + text});
+                    }
                 });
             });
 
