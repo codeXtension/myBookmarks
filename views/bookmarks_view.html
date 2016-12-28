@@ -12,13 +12,6 @@
 <div class="col-xs-12 col-sm-3 no-padding">
 
     <div class="panel panel-primary bookmark-scrollable bookmarkList no-margin-bottom">
-               <div>
-        <div class="inner-addon left-addon">
-            <i class="fa fa-search" aria-hidden="true"></i>
-            <input type="search" (keyup)="onChange($event)" id="searchText" class="form-control"
-                   placeholder="Search ...">
-        </div>
-    </div>
         <a *ngFor="let value of filteredValues" href="{{value.url}}" target="_blank" class="list-group-item square-border">
             <img [src]="value.favIco"/>&nbsp;{{value.title}}
         </a>
