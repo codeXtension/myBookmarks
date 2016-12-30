@@ -23,6 +23,7 @@ export class BackgroundService implements OnInit {
     ngOnInit() {
         let bookmarksFinder:LocalBookmarkResolver = this.localBookmarkResolver;
         let isTag:any = this.isTag;
+        let isValidInput:any = this.isValidInput;
 
         chrome.omnibox.onInputStarted.addListener(function () {
             chrome.omnibox.setDefaultSuggestion({
@@ -33,6 +34,7 @@ export class BackgroundService implements OnInit {
         chrome.omnibox.onInputChanged.addListener(
             function (text, suggest:any) { // SuggestResult[]
                 if (text.length < 1) return;
+                let query:string[] = text.split(' ');
 
                 let filteredValues:Array<Bookmark> = [];
                 console.info('Text for search ' + text);
@@ -40,24 +42,21 @@ export class BackgroundService implements OnInit {
                     filteredValues = filteredValues.concat(moreBookmarks);
                     let results:SuggestResult[] = [];
                     for (let fv of filteredValues) {
-                        if (fv.title.toLowerCase().indexOf(text.toLowerCase()) > -1 ||
-                            fv.url.toLowerCase().indexOf(text.toLowerCase()) > -1 ||
-                            isTag(fv.tags, text)) {
+                        if (isValidInput(query, fv)) {
                             let res:SuggestResult = {content: null, description: null};
                             res.description = _.escape(fv.title);
                             res.content = fv.url;
                             results.push(res);
                         }
                     }
-                    if (results.length > 5) {
+                    if (results.length > 4) {
                         let res:SuggestResult = {content: null, description: null};
-                        res.description = 'Too many results found (' + results.length + '), please refine more your search ...';
+                        res.description = 'Too many results found (' + results.length + '), displaying the first 4 ...';
                         res.content = 'chrome://newtab';
-                        results = [];
+                        results = results.slice(0, 4);
                         results.push(res);
                     }
                     suggest(results);
-                    console.info("Found " + results.length + " results.");
                 });
             });
 
@@ -77,13 +76,44 @@ export class BackgroundService implements OnInit {
         });
     }
 
-    private isTag(tags:Tag[], text:string):boolean {
-        for (let tag of tags) {
-            if (tag.name.toLowerCase().indexOf(text.toLowerCase()) > -1) {
+    private isValidInput(query:string[], fv:Bookmark):boolean {
+        let c:number = query.length;
+        let title_match:string[] = BackgroundService.prototype.isArrayInString(query, fv.title);
+        let url_match:string[] = BackgroundService.prototype.isArrayInString(query, fv.url);
+        let tag_match:string[] = BackgroundService.prototype.isTag(query, fv.tags);
+
+        if (title_match.length == c || url_match.length == c || tag_match.length == c) {
+            return true;
+        } else if (title_match.length > 0 || url_match.length > 0) {
+            if (tag_match.length > 0 && (tag_match.length + title_match.length == c) && _.intersection(tag_match, title_match).length == 0) {
                 return true;
+            } else if (tag_match.length > 0 && (tag_match.length + url_match.length == c) && _.intersection(tag_match, url_match).length == 0) {
+                return true;
+            } else {
+                return false;
             }
+        } else {
+            return false;
         }
-        return false;
     }
 
+    private isTag(text:string[], tags:Tag[]):string[] {
+        let result:string[] = [];
+        for (let tag of tags) {
+            if (text.indexOf(tag.name.toLowerCase()) > -1) {
+                result.push(tag.name.toLowerCase());
+            }
+        }
+        return result;
+    }
+
+    private isArrayInString(arr:string[], txt:string):string[] {
+        let result:string[] = [];
+        for (let s of arr) {
+            if (txt.toLowerCase().indexOf(s.toLowerCase()) > -1) {
+                result.push(s.toLowerCase());
+            }
+        }
+        return result;
+    }
 }
