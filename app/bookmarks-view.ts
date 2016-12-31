@@ -34,29 +34,57 @@ export class BookmarksView implements OnInit {
             .then(bookmarks => this.filteredValues = bookmarks)
             .then(bookmarks => {
                 let data:Tag[] = [];
-                for(let value of bookmarks) {
-                    data = _.union(data,value.tags);
+                for (let value of bookmarks) {
+                    data = _.union(data, value.tags);
                 }
-                for (let i=0; i<data.length; i+=6) {
-                   this.availableTags.push(data.slice(i,i+6));
+
+                for (let i = 0; i < data.length; i += 6) {
+                    this.availableTags.push(data.slice(i, i + 6));
                 }
-        });
+
+                for (let i = 0; i < this.availableTags.length; i++) {
+                    let tags:Tag[] = this.availableTags[i];
+                    for (let j = 0; j < tags.length; j++) {
+                        chrome.storage.local.get('bookmarkImages', (items:any) => {
+                            if (items.bookmarkImages.bookmarkImages != undefined) {
+                                for (let ti of items.bookmarkImages.bookmarkImages) {
+                                    if (tags[j].name == ti.name) {
+                                        this.availableTags[i][j].image = this.sanitizer.bypassSecurityTrustStyle(ti.image);
+                                        break;
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }
+            });
     }
 
     onUpload(event:any, tag:Tag) {
-        let filesize:number = ((event.currentTarget.files[0].size/1024)/1024);
+        let filesize:number = ((event.currentTarget.files[0].size / 1024) / 1024);
         let fileName:string = event.currentTarget.files[0].name;
 
-        if(filesize>0.2 || (!fileName.endsWith(".jpg") && !fileName.endsWith(".png") && !fileName.endsWith(".jpeg") && !fileName.endsWith(".gif"))) {
+        if (filesize > 0.1 || (!fileName.endsWith(".jpg") && !fileName.endsWith(".png") && !fileName.endsWith(".jpeg") && !fileName.endsWith(".gif"))) {
             return;
         }
 
-        let urlCleaner:DomSanitizer=this.sanitizer;
+        let urlCleaner:DomSanitizer = this.sanitizer;
         let fileReader:FileReader = new FileReader();
         fileReader.readAsDataURL(event.currentTarget.files[0]);
-        fileReader.onloadend = function(e:any){
+        fileReader.onloadend = function (e:any) {
             tag.image = urlCleaner.bypassSecurityTrustStyle('url(' + e.target.result + ')');
-        }
+            chrome.storage.local.get('bookmarkImages', (items:any) => {
+                if (items.bookmarkImages != undefined) {
+                    items.bookmarkImages.push(tag);
+                } else {
+                    items = [];
+                    items.push(tag);
+                }
+                chrome.storage.local.set({'bookmarkImages': items}, ()=> {
+                    console.info('Image saved in the storage!');
+                });
+            });
+        };
     }
 
     onChange(event:any) {
@@ -66,12 +94,12 @@ export class BookmarksView implements OnInit {
             this.filteredValues = this.values;
         } else {
             let result:Array<Bookmark> = [];
-            for(let value of this.filteredValues){
-               if(value.title.toLowerCase().indexOf(this.selectedValue.toLowerCase())>-1){
-                   result.push(value);
-               } else if(value.url.toLowerCase().indexOf(this.selectedValue.toLowerCase())>-1){
-                   result.push(value);
-               }
+            for (let value of this.filteredValues) {
+                if (value.title.toLowerCase().indexOf(this.selectedValue.toLowerCase()) > -1) {
+                    result.push(value);
+                } else if (value.url.toLowerCase().indexOf(this.selectedValue.toLowerCase()) > -1) {
+                    result.push(value);
+                }
             }
             this.filteredValues = result;
         }
@@ -79,15 +107,15 @@ export class BookmarksView implements OnInit {
 
     onTagClick(event:any, tag:Tag) {
         let result:Array<Bookmark> = [];
-        for(let value of this.values){
-            if(_.contains(value.tags, tag)){
+        for (let value of this.values) {
+            if (_.contains(value.tags, tag)) {
                 result.push(value);
             }
         }
-        if(_.isEqual(result, this.filteredValues)){
+        if (_.isEqual(result, this.filteredValues)) {
             this.filteredValues = this.values;
             this.selectedTag = null;
-        }else{
+        } else {
             this.selectedTag = tag;
             this.filteredValues = result;
         }
@@ -106,7 +134,7 @@ export class BookmarksView implements OnInit {
         }
     }
 
-    cleanURL(url:string):SafeUrl{
+    cleanURL(url:string):SafeUrl {
         return this.sanitizer.bypassSecurityTrustUrl('chrome://favicon/' + url);
     }
 }

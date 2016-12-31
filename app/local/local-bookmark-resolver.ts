@@ -61,6 +61,7 @@ export class LocalBookmarkResolver implements BookmarksResolver {
             result.push(bookmark);
         } else if (bookmarkNode.children != undefined) {
             let tempTag = parentTags.slice();
+
             let tag:Tag = new Tag(bookmarkNode.title, this.sanitizer.bypassSecurityTrustStyle('url()'));
             tempTag.push(tag);
             for (var n = 0; n < bookmarkNode.children.length; n++) {
