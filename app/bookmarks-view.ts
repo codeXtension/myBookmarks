@@ -25,6 +25,9 @@ export class BookmarksView implements OnInit {
     }
 
     ngOnInit() {
+        /*        chrome.storage.sync.clear(()=>{
+         alert('cleared');
+         });*/
         this.values = [];
         this.filteredValues = [];
         this.availableTags = [];
@@ -48,14 +51,16 @@ export class BookmarksView implements OnInit {
         let fileName:string = event.currentTarget.files[0].name.toLowerCase();
 
         if (filesize > 0.1 || (!fileName.endsWith(".jpg") && !fileName.endsWith(".png") && !fileName.endsWith(".jpeg") && !fileName.endsWith(".gif"))) {
+            window.alert('Invalid image size or extension or name!');
             return;
         }
 
         let urlCleaner:DomSanitizer = this.sanitizer;
         let fileReader:FileReader = new FileReader();
         fileReader.readAsDataURL(event.currentTarget.files[0]);
+
         fileReader.onloadend = function (e:any) {
-            tag.image = urlCleaner.bypassSecurityTrustStyle('url(file:///C:/Users/elie/Pictures/myBookmarks/' + fileName + ')');
+            tag.image = urlCleaner.bypassSecurityTrustStyle('url("file:///C:/Users/elie/Pictures/myBookmarks/' + fileName + '")');
             chrome.storage.sync.get('bookmarkImages', (items:any) => {
                 if (items.bookmarkImages != undefined && items.bookmarkImages instanceof Array) {
                     items.bookmarkImages.push(tag);
@@ -97,11 +102,17 @@ export class BookmarksView implements OnInit {
             }
         }
 
-        let elements: NodeListOf<Element> = document.getElementsByClassName('clickable');
-        for(let i=0; i < elements.length;i++){
+        let wasActive:boolean = false;
+        if (event.currentTarget.classList.contains('thin-border-active')) {
+            wasActive = true;
+        }
+        let elements:NodeListOf<Element> = document.getElementsByClassName('clickable');
+        for (let i = 0; i < elements.length; i++) {
             elements[i].classList.remove('thin-border-active');
         }
-        event.currentTarget.classList.add('thin-border-active');
+        if (!wasActive) {
+            event.currentTarget.classList.add('thin-border-active');
+        }
 
         if (_.isEqual(result, this.filteredValues)) {
             this.filteredValues = this.values;

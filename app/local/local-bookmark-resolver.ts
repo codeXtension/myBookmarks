@@ -66,14 +66,15 @@ export class LocalBookmarkResolver implements BookmarksResolver {
         } else if (bookmarkNode.children != undefined) {
             let tempTag = parentTags.slice();
 
-            let url:SafeUrl=this.sanitizer.bypassSecurityTrustStyle('url()');
-            for(let t of this.allImageTags){
-                if(t.name == bookmarkNode.title){
-                    url = this.sanitizer.bypassSecurityTrustStyle(t.image.changingThisBreaksApplicationSecurity);
-                    break;
+            let url:SafeUrl = this.sanitizer.bypassSecurityTrustStyle('url()');
+            if (this.allImageTags != null) {
+                for (let t of this.allImageTags) {
+                    if (t.name == bookmarkNode.title) {
+                        url = this.sanitizer.bypassSecurityTrustStyle(t.image.changingThisBreaksApplicationSecurity);
+                        break;
+                    }
                 }
             }
-
             let tag:Tag = new Tag(bookmarkNode.title, url);
             tempTag.push(tag);
             for (var n = 0; n < bookmarkNode.children.length; n++) {
