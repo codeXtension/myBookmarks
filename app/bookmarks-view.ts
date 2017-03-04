@@ -5,7 +5,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Bookmark,BookmarkType } from './bookmark';
 import { LocalBookmarkResolver } from './local/local-bookmark-resolver';
-import {SafeUrl, DomSanitizer} from '@angular/platform-browser';
+import {SafeUrl, SafeStyle, DomSanitizer} from '@angular/platform-browser';
 import {Tag} from "./Tag";
 
 @Component({
@@ -30,7 +30,7 @@ export class BookmarksView implements OnInit {
         this.filteredValues = [];
         this.availableTags = [];
         this.getGoogleDrivePath().then(value=> {
-            this.googleDrivePath = value;
+            this.googleDrivePath = value.replace(/\\/g, '/');
         });
         this.localBookmarkResolver.findAll()
             .then(bookmarks => this.values = bookmarks)
@@ -58,12 +58,7 @@ export class BookmarksView implements OnInit {
         }
 
         let urlCleaner:DomSanitizer = this.sanitizer;
-        let fileReader:FileReader = new FileReader();
-        fileReader.readAsDataURL(event.currentTarget.files[0]);
-
-        fileReader.onloadend = function (e:any) {
-            me.googleDrivePath = me.googleDrivePath.replace(/\\/g, '/');
-            tag.image = urlCleaner.bypassSecurityTrustStyle('url("file:///' + me.googleDrivePath + '/' + fileName + '")');
+        tag.image = fileName;
             chrome.storage.sync.get('bookmarkImages', (items:any) => {
                 if (items.bookmarkImages != undefined && items.bookmarkImages instanceof Array) {
                     items.bookmarkImages.push(tag);
@@ -76,7 +71,6 @@ export class BookmarksView implements OnInit {
                     console.info('Image saved in the storage!');
                 });
             });
-        };
     }
 
     onChange(event:any) {
@@ -141,6 +135,10 @@ export class BookmarksView implements OnInit {
 
     cleanURL(url:string):SafeUrl {
         return this.sanitizer.bypassSecurityTrustUrl('chrome://favicon/' + url);
+    }
+
+    cleanStyle(image:string):SafeStyle {
+        return this.sanitizer.bypassSecurityTrustStyle('url("file:///' + this.googleDrivePath + '/' + image + '")');
     }
 
     private getGoogleDrivePath():Promise<string> {

@@ -4,6 +4,6 @@ import {SafeUrl} from "@angular/platform-browser";
  */
 export class Tag {
     constructor(public name:string,
-                public image:SafeUrl) {
+                public image:string) {
     }
 }

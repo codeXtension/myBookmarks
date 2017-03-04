@@ -11,11 +11,16 @@ import {Tag} from "../Tag";
 export class LocalBookmarkResolver implements BookmarksResolver {
     private canRefresh:boolean;
     private allImageTags:Array<Tag>;
+    private googleDrivePath:string;
 
     constructor(private sanitizer:DomSanitizer) {
         this.canRefresh = true;
         this.findAllImages().then(tags => {
             this.allImageTags = tags;
+        });
+
+        this.getGoogleDrivePath().then(value=> {
+            this.googleDrivePath = value.replace(/\\/g, '/');
         });
     }
 
@@ -66,11 +71,11 @@ export class LocalBookmarkResolver implements BookmarksResolver {
         } else if (bookmarkNode.children != undefined) {
             let tempTag = parentTags.slice();
 
-            let url:SafeUrl = this.sanitizer.bypassSecurityTrustStyle('url()');
+            let url:string = '';
             if (this.allImageTags != null) {
                 for (let t of this.allImageTags) {
                     if (t.name == bookmarkNode.title) {
-                        url = this.sanitizer.bypassSecurityTrustStyle(t.image.changingThisBreaksApplicationSecurity);
+                        url = t.image;
                         break;
                     }
                 }
@@ -90,6 +95,14 @@ export class LocalBookmarkResolver implements BookmarksResolver {
                     resolve(items.bookmarkImages);
                 }
                 resolve(null);
+            });
+        });
+    }
+
+    private getGoogleDrivePath():Promise<string> {
+        return new Promise(function (resolve, reject) {
+            chrome.storage.local.get('googleDrivePath', output => {
+                resolve(output.googleDrivePath);
             });
         });
     }
