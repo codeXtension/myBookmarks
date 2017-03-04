@@ -131,10 +131,17 @@ a.list-group-item {
   border-style: none;
   filter: grayscale(100%);
 }
+
 .thin-border:hover {
   background-color: whitesmoke;
   filter: grayscale(0%);
 }
+
+.thin-border-active {
+  background-color: whitesmoke;
+  filter: grayscale(0%);
+}
+
 .mb-upload {
   opacity: 0;
   cursor: pointer;

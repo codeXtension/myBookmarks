@@ -22,7 +22,6 @@ export class BookmarksView implements OnInit {
     private selectedTag:Tag;
 
     constructor(private localBookmarkResolver:LocalBookmarkResolver, private sanitizer:DomSanitizer) {
-
     }
 
     ngOnInit() {
@@ -45,11 +44,12 @@ export class BookmarksView implements OnInit {
                 for (let i = 0; i < this.availableTags.length; i++) {
                     let tags:Tag[] = this.availableTags[i];
                     for (let j = 0; j < tags.length; j++) {
+
                         chrome.storage.local.get('bookmarkImages', (items:any) => {
-                            if (items.bookmarkImages.bookmarkImages != undefined) {
-                                for (let ti of items.bookmarkImages.bookmarkImages) {
+                            if (items.bookmarkImages != undefined) {
+                                for (let ti of items.bookmarkImages) {
                                     if (tags[j].name == ti.name) {
-                                        this.availableTags[i][j].image = this.sanitizer.bypassSecurityTrustStyle(ti.image);
+                                        this.availableTags[i][j] = ti;
                                         break;
                                     }
                                 }
@@ -62,7 +62,7 @@ export class BookmarksView implements OnInit {
 
     onUpload(event:any, tag:Tag) {
         let filesize:number = ((event.currentTarget.files[0].size / 1024) / 1024);
-        let fileName:string = event.currentTarget.files[0].name;
+        let fileName:string = event.currentTarget.files[0].name.toLowerCase();
 
         if (filesize > 0.1 || (!fileName.endsWith(".jpg") && !fileName.endsWith(".png") && !fileName.endsWith(".jpeg") && !fileName.endsWith(".gif"))) {
             return;
@@ -74,8 +74,9 @@ export class BookmarksView implements OnInit {
         fileReader.onloadend = function (e:any) {
             tag.image = urlCleaner.bypassSecurityTrustStyle('url(' + e.target.result + ')');
             chrome.storage.local.get('bookmarkImages', (items:any) => {
-                if (items.bookmarkImages != undefined) {
+                if (items.bookmarkImages != undefined && items.bookmarkImages instanceof Array) {
                     items.bookmarkImages.push(tag);
+                    items = items.bookmarkImages;
                 } else {
                     items = [];
                     items.push(tag);
@@ -112,6 +113,13 @@ export class BookmarksView implements OnInit {
                 result.push(value);
             }
         }
+
+        let elements: NodeListOf<Element> = document.getElementsByClassName('clickable');
+        for(let i=0; i < elements.length;i++){
+            elements[i].classList.remove('thin-border-active');
+        }
+        event.currentTarget.classList.add('thin-border-active');
+
         if (_.isEqual(result, this.filteredValues)) {
             this.filteredValues = this.values;
             this.selectedTag = null;
