@@ -53,7 +53,9 @@ export class BookmarksView implements OnInit {
         let fileName:string = event.currentTarget.files[0].name.toLowerCase();
 
         if (filesize > 0.1 || (!fileName.endsWith(".jpg") && !fileName.endsWith(".png") && !fileName.endsWith(".jpeg") && !fileName.endsWith(".gif"))) {
-            window.alert('Invalid image size or extension or name!');
+            Growl.settings.style = "warning";
+            Growl.settings.size = "large";
+            Growl.growl({title: "myBookmarks", message: "Invalid image size or extension!"});
             return;
         }
 

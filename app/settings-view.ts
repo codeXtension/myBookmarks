@@ -26,7 +26,9 @@ export class SettingsView extends OnInit {
 
     clearAllImages() {
         chrome.storage.sync.clear(()=> {
-            alert('All images cleared');
+            Growl.settings.style = "notice";
+            Growl.settings.size = "large";
+            Growl.growl({title: "Settings", message: "All image references removed with success!"});
         });
     }
 
