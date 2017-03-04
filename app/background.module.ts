@@ -1,15 +1,15 @@
 /**
- * Created by elie on 04.03.2017.
+ * Created by elie on 09.12.2016.
  */
 import { NgModule, enableProdMode }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { SettingsView }   from './settings-view';
+import { BackgroundService }   from './background-service';
 import { HttpModule } from '@angular/http';
 
 @NgModule({
     imports:      [BrowserModule, HttpModule],
-    declarations: [SettingsView],
-    bootstrap:    [SettingsView]
+    declarations: [BackgroundService],
+    bootstrap:    [BackgroundService]
 })
 export class AppModule { }
 

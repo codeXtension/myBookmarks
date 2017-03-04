@@ -1,26 +1,20 @@
-<div class="panel panel-primary">
-    <div class="panel-heading">
-        <h3 class="panel-title">
-            <span class="fa fa-link" aria-hidden="true"></span>&nbsp;Bookmarks
-            <span title="Settings" class="fa fa-cog pull-right" (click)="openSettings($event)" aria-hidden="true"
-                  style="cursor:pointer;"></span>
-            <span title="Refresh" class="fa fa-refresh pull-right" (click)="refreshView($event)" aria-hidden="true" style="cursor:pointer;"></span>
-        </h3>
+<div class="col-xs-12 col-sm-9">
+     <div id="tagCloud">
+      <div *ngFor="let tags of availableTags" class="row">
+          <div (click)="onTagClick($event, tag)" [style.background-image]="cleanStyle(tag.image)"
+               style="background-size:100% 100%" *ngFor="let tag of tags" class="col-md-2 clickable thin-border">
+              <div class="bottom-align-text">
+                  <label [attr.for]="tag.name">&nbsp;&nbsp;<i class="fa fa-picture-o mb-upload" aria-hidden="true"></i></label><input type="file" (change)="onUpload($event,tag, errorTooltip)" accept=".jpg, .png, .jpeg, .gif|images/*" [attr.id]="tag.name">&nbsp;&nbsp;<label>{{tag.name}}</label>&nbsp;&nbsp;&nbsp;
+              </div>
+          </div>
+      </div>
     </div>
-    <div class="panel-body">
-        <div class="form-group-sm">
+</div>
+<div class="col-xs-12 col-sm-3 no-padding">
 
-        </div>
-        <div>
-            <input type="search" (keyup)="onChange($event)" id="searchText" class="form-control"
-                   placeholder="Search ...">
-        </div>
-    </div>
-    <div class="separator">
-        <div class="list-group bookmark-scrollable bookmarkList">
-            <a *ngFor="let value of values" href="{{value.url}}" target="_blank" class="list-group-item square-border">
-                <img [src]="value.favIco"/>&nbsp;{{value.title}}
-            </a>
-        </div>
+    <div class="panel panel-primary bookmark-scrollable bookmarkList no-margin-bottom">
+        <a *ngFor="let value of filteredValues" href="{{value.url}}" target="_blank" class="list-group-item square-border">
+            <img [src]="value.favIco"/>&nbsp;{{value.title}}
+        </a>
     </div>
 </div>

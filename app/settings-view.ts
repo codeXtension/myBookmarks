@@ -1,29 +1,40 @@
+/**
+ * Created by elie on 04.03.2017.
+ */
 import { Component, OnInit } from '@angular/core';
-import { GoogleBookmarkResolver } from './gd/google-bookmark-resolver';
-import {LocalSettings} from "./local/local-settings";
-import {GoogleSettings} from "./gd/google-settings";
-import {OcSettings} from "./oc/oc-settings";
+import { BrowserModule } from '@angular/platform-browser';
 
 @Component({
     selector: 'settings',
-    templateUrl: '../views/settings_view.html',
-    providers: [GoogleBookmarkResolver]
+    templateUrl: '../views/settings_view.html'
 })
-export class SettingsView implements OnInit {
-    public connected:boolean;
+export class SettingsView extends OnInit {
+    private googleDrivePath:string = '';
 
     ngOnInit() {
-
+        this.getGoogleDrivePath().then(value=> {
+            this.googleDrivePath = value;
+        });
     }
 
-    constructor(private googleBookmarkResolver:GoogleBookmarkResolver) {
-        this.connected = false;
+    onChange(event:any) {
+        this.googleDrivePath = event.currentTarget.value;
+        chrome.storage.local.set({'googleDrivePath': event.currentTarget.value}, () => {
+            console.info('Google Drive path set to' + this.googleDrivePath);
+        });
     }
 
-    isConnected(event:any) {
-        console.debug("checking if SettingsView.isConnected()");
-        this.googleBookmarkResolver.connect().then(data => this.connected = data);
+    clearAllImages() {
+        chrome.storage.sync.clear(()=> {
+            alert('All images cleared');
+        });
+    }
+
+    private getGoogleDrivePath():Promise<string> {
+        return new Promise(function (resolve, reject) {
+            chrome.storage.local.get('googleDrivePath', output => {
+                resolve(output.googleDrivePath);
+            });
+        });
     }
 }
-
-

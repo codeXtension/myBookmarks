@@ -2,11 +2,12 @@
  * Created by elie on 04.07.2016.
  */
 import {SafeUrl} from '@angular/platform-browser';
+import {Tag} from "./Tag";
 export class Bookmark {
     constructor(public url:string,
                 public favIco:SafeUrl,
                 public title:string,
-                public tags:string[],
+                public tags:Tag[],
                 public src:BookmarkType,
                 public color:string) {
     }
