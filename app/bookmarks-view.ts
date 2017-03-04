@@ -20,17 +20,18 @@ export class BookmarksView implements OnInit {
     public availableTags:Array<Array<Tag>>;
     private selectedValue:string;
     private selectedTag:Tag;
+    private googleDrivePath:string;
 
     constructor(private localBookmarkResolver:LocalBookmarkResolver, private sanitizer:DomSanitizer) {
     }
 
     ngOnInit() {
-        /*        chrome.storage.sync.clear(()=>{
-         alert('cleared');
-         });*/
         this.values = [];
         this.filteredValues = [];
         this.availableTags = [];
+        this.getGoogleDrivePath().then(value=> {
+            this.googleDrivePath = value;
+        });
         this.localBookmarkResolver.findAll()
             .then(bookmarks => this.values = bookmarks)
             .then(bookmarks => this.filteredValues = bookmarks)
@@ -47,6 +48,7 @@ export class BookmarksView implements OnInit {
     }
 
     onUpload(event:any, tag:Tag) {
+        let me:any = this;
         let filesize:number = ((event.currentTarget.files[0].size / 1024) / 1024);
         let fileName:string = event.currentTarget.files[0].name.toLowerCase();
 
@@ -60,7 +62,8 @@ export class BookmarksView implements OnInit {
         fileReader.readAsDataURL(event.currentTarget.files[0]);
 
         fileReader.onloadend = function (e:any) {
-            tag.image = urlCleaner.bypassSecurityTrustStyle('url("file:///C:/Users/elie/Pictures/myBookmarks/' + fileName + '")');
+            me.googleDrivePath = me.googleDrivePath.replace(/\\/g, '/');
+            tag.image = urlCleaner.bypassSecurityTrustStyle('url("file:///' + me.googleDrivePath + '/' + fileName + '")');
             chrome.storage.sync.get('bookmarkImages', (items:any) => {
                 if (items.bookmarkImages != undefined && items.bookmarkImages instanceof Array) {
                     items.bookmarkImages.push(tag);
@@ -138,5 +141,13 @@ export class BookmarksView implements OnInit {
 
     cleanURL(url:string):SafeUrl {
         return this.sanitizer.bypassSecurityTrustUrl('chrome://favicon/' + url);
+    }
+
+    private getGoogleDrivePath():Promise<string> {
+        return new Promise(function (resolve, reject) {
+            chrome.storage.local.get('googleDrivePath', output => {
+                resolve(output.googleDrivePath);
+            });
+        });
     }
 }

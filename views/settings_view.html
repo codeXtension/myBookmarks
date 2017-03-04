@@ -1,6 +1,18 @@
 <div class="panel panel-primary">
-  <div class="panel-heading">Common Settings</div>
-  <div class="panel-body">
-    Panel content
-  </div>
+    <div class="panel-heading">Common Settings</div>
+    <div class="panel-body">
+        <label for="basic-url">Your google drive path</label>
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon3"><i class="fa fa-google" aria-hidden="true"></i></span>
+            <input type="text" class="form-control" (change)="onChange($event)" [value]="googleDrivePath" id="basic-url"
+                   aria-describedby="basic-addon3">
+        </div>
+    </div>
+    <ul class="list-group">
+        <li class="list-group-item">
+            <button type="button" (click)="clearAllImages()" class="btn btn-primary btn-sm">
+                <span class="fa fa-eraser" aria-hidden="true"></span> Clear all image labels
+            </button>
+        </li>
+    </ul>
 </div>
