@@ -40,23 +40,6 @@ export class BookmarksView implements OnInit {
                 for (let i = 0; i < data.length; i += 6) {
                     this.availableTags.push(data.slice(i, i + 6));
                 }
-
-                for (let i = 0; i < this.availableTags.length; i++) {
-                    let tags:Tag[] = this.availableTags[i];
-                    for (let j = 0; j < tags.length; j++) {
-
-                        chrome.storage.local.get('bookmarkImages', (items:any) => {
-                            if (items.bookmarkImages != undefined) {
-                                for (let ti of items.bookmarkImages) {
-                                    if (tags[j].name == ti.name) {
-                                        this.availableTags[i][j] = ti;
-                                        break;
-                                    }
-                                }
-                            }
-                        });
-                    }
-                }
             });
     }
 
@@ -72,8 +55,8 @@ export class BookmarksView implements OnInit {
         let fileReader:FileReader = new FileReader();
         fileReader.readAsDataURL(event.currentTarget.files[0]);
         fileReader.onloadend = function (e:any) {
-            tag.image = urlCleaner.bypassSecurityTrustStyle('url(' + e.target.result + ')');
-            chrome.storage.local.get('bookmarkImages', (items:any) => {
+            tag.image = urlCleaner.bypassSecurityTrustStyle('url(file:///C:/Users/elie/Pictures/myBookmarks/' + fileName + ')');
+            chrome.storage.sync.get('bookmarkImages', (items:any) => {
                 if (items.bookmarkImages != undefined && items.bookmarkImages instanceof Array) {
                     items.bookmarkImages.push(tag);
                     items = items.bookmarkImages;
@@ -81,7 +64,7 @@ export class BookmarksView implements OnInit {
                     items = [];
                     items.push(tag);
                 }
-                chrome.storage.local.set({'bookmarkImages': items}, ()=> {
+                chrome.storage.sync.set({'bookmarkImages': items}, ()=> {
                     console.info('Image saved in the storage!');
                 });
             });
