@@ -59,18 +59,28 @@ export class BookmarksView implements OnInit {
 
         let urlCleaner:DomSanitizer = this.sanitizer;
         tag.image = fileName;
-            chrome.storage.sync.get('bookmarkImages', (items:any) => {
-                if (items.bookmarkImages != undefined && items.bookmarkImages instanceof Array) {
-                    items.bookmarkImages.push(tag);
-                    items = items.bookmarkImages;
-                } else {
-                    items = [];
-                    items.push(tag);
+        chrome.storage.sync.get('bookmarkImages', (items:any) => {
+            if (items.bookmarkImages != undefined && items.bookmarkImages instanceof Array) {
+                let index:any = -1;
+                for (let item of items.bookmarkImages) {
+                    if (item.name == tag.name) {
+                        index = items.bookmarkImages.indexOf(item, 0);
+                        break;
+                    }
                 }
-                chrome.storage.sync.set({'bookmarkImages': items}, ()=> {
-                    console.info('Image saved in the storage!');
-                });
+                if (index > -1) {
+                    items.bookmarkImages.splice(index, 1);
+                }
+                items.bookmarkImages.push(tag);
+                items = items.bookmarkImages;
+            } else {
+                items = [];
+                items.push(tag);
+            }
+            chrome.storage.sync.set({'bookmarkImages': items}, ()=> {
+                console.info('Image saved in the storage!');
             });
+        });
     }
 
     onChange(event:any) {
