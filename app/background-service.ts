@@ -24,6 +24,7 @@ export class BackgroundService implements OnInit {
         let bookmarksFinder:LocalBookmarkResolver = this.localBookmarkResolver;
         let isTag:any = this.isTag;
         let isValidInput:any = this.isValidInput;
+        let me:any = this;
 
         chrome.omnibox.onInputStarted.addListener(function () {
             chrome.omnibox.setDefaultSuggestion({
@@ -116,4 +117,5 @@ export class BackgroundService implements OnInit {
         }
         return result;
     }
+
 }

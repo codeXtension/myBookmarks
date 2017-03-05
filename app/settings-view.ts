@@ -25,7 +25,11 @@ export class SettingsView extends OnInit {
             this.googleDrivePath = '';
         }
         chrome.storage.local.set({'googleDrivePath': this.googleDrivePath}, () => {
-            console.info('Google Drive path set to' + this.googleDrivePath);
+            console.info('Google Drive path set to ' + this.googleDrivePath);
+        });
+
+        chrome.storage.local.set({'settingsChanged': true}, () => {
+            console.info('Settings changed');
         });
     }
 

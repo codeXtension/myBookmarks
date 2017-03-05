@@ -2,7 +2,7 @@
  * Created by elie on 04.07.2016.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone} from '@angular/core';
 import { Bookmark,BookmarkType } from './bookmark';
 import { LocalBookmarkResolver } from './local/local-bookmark-resolver';
 import {SafeUrl, SafeStyle, DomSanitizer} from '@angular/platform-browser';
@@ -22,7 +22,7 @@ export class BookmarksView implements OnInit {
     private selectedTag:Tag;
     private googleDrivePath:string;
 
-    constructor(private localBookmarkResolver:LocalBookmarkResolver, private sanitizer:DomSanitizer) {
+    constructor(private localBookmarkResolver:LocalBookmarkResolver, private sanitizer:DomSanitizer, private zone:NgZone) {
     }
 
     ngOnInit() {
@@ -47,6 +47,18 @@ export class BookmarksView implements OnInit {
                     this.availableTags.push(data.slice(i, i + 6));
                 }
             });
+
+        let me:any = this;
+        chrome.storage.onChanged.addListener(function (theChange:any, ns) {
+            if (theChange.googleDrivePath != null) {
+                if (theChange.googleDrivePath.newValue != null) {
+                    me.googleDrivePath = theChange.googleDrivePath.newValue.replace(/\\/g, '/');
+                }
+                me.zone.run(() => {
+                    console.log('Change detected, refreshing ...');
+                });
+            }
+        });
     }
 
     onUpload(event:any, tag:Tag) {
