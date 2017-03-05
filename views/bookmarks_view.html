@@ -5,7 +5,7 @@
                style="background-size:100% 100%" *ngFor="let tag of tags" class="col-md-2 clickable thin-border">
               <div class="bottom-align-text">
                   <label [attr.for]="tag.name">&nbsp;&nbsp;<i class="fa fa-picture-o mb-upload"
-                                                              [style.display]="(googleDrivePath==null || googleDrivePath=='')?'none':'block'"
+                                                              [style.display]="(googleDrivePath==null || googleDrivePath=='')?'none':''"
                                                               aria-hidden="true"></i></label><input type="file"
                                                                                                     [disabled]="googleDrivePath==null || googleDrivePath==''"
                                                                                                     (change)="onUpload($event,tag, errorTooltip)"
