@@ -152,7 +152,7 @@ export class BookmarksView implements OnInit {
     }
 
     cleanStyle(image:string):SafeStyle {
-        if (this.googleDrivePath != null) {
+        if (this.googleDrivePath != null && this.googleDrivePath.trim().length > 0) {
             return this.sanitizer.bypassSecurityTrustStyle('url("file:///' + this.googleDrivePath + '/' + image + '")');
         } else {
             return null;

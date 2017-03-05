@@ -4,7 +4,13 @@
           <div (click)="onTagClick($event, tag)" [style.background-image]="cleanStyle(tag.image)"
                style="background-size:100% 100%" *ngFor="let tag of tags" class="col-md-2 clickable thin-border">
               <div class="bottom-align-text">
-                  <label [attr.for]="tag.name">&nbsp;&nbsp;<i class="fa fa-picture-o mb-upload" aria-hidden="true"></i></label><input type="file" (change)="onUpload($event,tag, errorTooltip)" accept=".jpg, .png, .jpeg, .gif|images/*" [attr.id]="tag.name">&nbsp;&nbsp;<label>{{tag.name}}</label>&nbsp;&nbsp;&nbsp;
+                  <label [attr.for]="tag.name">&nbsp;&nbsp;<i class="fa fa-picture-o mb-upload"
+                                                              [style.display]="(googleDrivePath==null || googleDrivePath=='')?'none':'block'"
+                                                              aria-hidden="true"></i></label><input type="file"
+                                                                                                    [disabled]="googleDrivePath==null || googleDrivePath==''"
+                                                                                                    (change)="onUpload($event,tag, errorTooltip)"
+                                                                                                    accept=".jpg, .png, .jpeg, .gif|images/*"
+                                                                                                    [attr.id]="tag.name">&nbsp;&nbsp;<label>{{tag.name}}</label>&nbsp;&nbsp;&nbsp;
               </div>
           </div>
       </div>

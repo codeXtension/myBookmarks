@@ -13,13 +13,18 @@ export class SettingsView extends OnInit {
 
     ngOnInit() {
         this.getGoogleDrivePath().then(value=> {
-            this.googleDrivePath = value;
+            if (value != null) {
+                this.googleDrivePath = value;
+            }
         });
     }
 
     onChange(event:any) {
         this.googleDrivePath = event.currentTarget.value;
-        chrome.storage.local.set({'googleDrivePath': event.currentTarget.value}, () => {
+        if (this.googleDrivePath == null) {
+            this.googleDrivePath = '';
+        }
+        chrome.storage.local.set({'googleDrivePath': this.googleDrivePath}, () => {
             console.info('Google Drive path set to' + this.googleDrivePath);
         });
     }
