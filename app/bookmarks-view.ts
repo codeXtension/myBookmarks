@@ -30,7 +30,9 @@ export class BookmarksView implements OnInit {
         this.filteredValues = [];
         this.availableTags = [];
         this.getGoogleDrivePath().then(value=> {
-            this.googleDrivePath = value.replace(/\\/g, '/');
+            if (value != null) {
+                this.googleDrivePath = value.replace(/\\/g, '/');
+            }
         });
         this.localBookmarkResolver.findAll()
             .then(bookmarks => this.values = bookmarks)
@@ -150,7 +152,11 @@ export class BookmarksView implements OnInit {
     }
 
     cleanStyle(image:string):SafeStyle {
-        return this.sanitizer.bypassSecurityTrustStyle('url("file:///' + this.googleDrivePath + '/' + image + '")');
+        if (this.googleDrivePath != null) {
+            return this.sanitizer.bypassSecurityTrustStyle('url("file:///' + this.googleDrivePath + '/' + image + '")');
+        } else {
+            return null;
+        }
     }
 
     private getGoogleDrivePath():Promise<string> {

@@ -20,7 +20,9 @@ export class LocalBookmarkResolver implements BookmarksResolver {
         });
 
         this.getGoogleDrivePath().then(value=> {
-            this.googleDrivePath = value.replace(/\\/g, '/');
+            if (value != null) {
+                this.googleDrivePath = value.replace(/\\/g, '/');
+            }
         });
     }
 
